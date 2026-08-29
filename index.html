@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B0200">
 <title>Школа Мгера Шакаряна</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +12,7 @@
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header over-video">
   <div class="nav-inner">
     <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
     <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
@@ -26,6 +27,10 @@
 </header>
 
 <section class="home-hero">
+  <video class="video-bg" autoplay muted loop playsinline poster="hero-poster.jpg">
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+  <div class="video-scrim"></div>
   <div class="kicker">Школа Мгера Шакаряна</div>
   <h1>Пять дней,<br>меняющих сердце</h1>
   <p class="verse">

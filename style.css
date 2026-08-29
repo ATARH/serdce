@@ -8,7 +8,7 @@
 }
 
 *{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden;}
 body{
   background:var(--ink);
   color:var(--cream);
@@ -16,6 +16,16 @@ body{
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
+  overflow-x:hidden;
+}
+/* быстрый, "лёгкий" тап на мобильных — без серой вспышки и без 300мс задержки */
+a, button, .flip-card, .btn, .premium-card, .status-pill{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+/* уважаем настройку "уменьшить анимацию" — и заодно экономим ресурсы слабых телефонов */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
 }
 body::before{
   content:"";
@@ -49,6 +59,11 @@ header.site-header{
   -webkit-backdrop-filter:blur(18px) saturate(160%);
   border-bottom:1px solid rgba(247,234,138,.1);
 }
+/* На страницах с видео в хиро блюр может не сработать на части мобильных браузеров —
+   держим фон шапки чуть плотнее, чтобы текст меню было видно в любом случае */
+header.site-header.over-video{
+  background:rgba(11,2,0,.55);
+}
 .nav-inner{
   max-width:1120px; margin:0 auto; padding:0 40px;
   height:76px; display:flex; align-items:center; justify-content:space-between;
@@ -70,22 +85,36 @@ nav.menu a.active::after{
   content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px;
   background:var(--amber);
 }
-.nav-toggle{display:none; background:none; border:none; color:var(--gold); font-size:22px; cursor:pointer;}
+.nav-toggle{display:none; background:none; border:none; color:var(--gold); font-size:22px; cursor:pointer; padding:10px; line-height:1;}
+.nav-toggle:active{transform:scale(.9);}
 
 @media(max-width:760px){
   .nav-inner{padding:0 22px;}
+  header.site-header{
+    /* блюр дешевле на слабых телефонах при меньшем радиусе — разница на глаз незаметна */
+    backdrop-filter:blur(10px) saturate(140%);
+    -webkit-backdrop-filter:blur(10px) saturate(140%);
+  }
   nav.menu{
     position:fixed; top:76px; left:0; right:0; z-index:49;
     flex-direction:column; gap:0;
-    background:rgba(11,2,0,.92);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    background:rgba(11,2,0,.95);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
     border-bottom:1px solid rgba(247,234,138,.12);
-    max-height:0; overflow:hidden; transition:max-height .3s ease;
+    /* анимируем только transform/opacity — это композитится на GPU и не подтормаживает,
+       в отличие от анимации max-height, которая пересчитывает раскладку на каждый кадр */
+    transform:translateY(-10px);
+    opacity:0;
+    pointer-events:none;
+    transition:transform .22s cubic-bezier(.3,.7,.4,1), opacity .18s ease;
+    will-change:transform, opacity;
   }
-  nav.menu.open{max-height:320px;}
-  nav.menu a{padding:16px 22px; border-top:1px solid rgba(255,255,255,.06);}
+  nav.menu.open{transform:translateY(0); opacity:1; pointer-events:auto;}
+  nav.menu a{padding:16px 22px; border-top:1px solid rgba(255,255,255,.06); display:block;}
+  nav.menu a:active{background:rgba(247,234,138,.06);}
   .nav-toggle{display:block;}
+  body::after{opacity:.28;} /* текстура-шум легче на мобильном рендере */
 }
 
 /* ===== HERO (общий для внутренних страниц) ===== */
@@ -113,7 +142,18 @@ nav.menu a.active::after{
 /* ===== HOME HERO ===== */
 .home-hero{
   min-height:78vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:100px 24px;
+  text-align:center; padding:100px 24px; position:relative; overflow:hidden;
+}
+.home-hero .video-bg{
+  position:absolute; inset:0; z-index:-3;
+  width:100%; height:100%; object-fit:cover;
+}
+.home-hero .video-scrim{
+  /* тёмная дымка поверх видео — держит контраст текста и палитру сайта */
+  position:absolute; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 100%, rgba(78,14,2,.55), transparent 65%),
+    linear-gradient(180deg, rgba(11,2,0,.75) 0%, rgba(11,2,0,.55) 40%, rgba(11,2,0,.85) 100%);
 }
 .home-hero .kicker{
   font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber);
@@ -140,11 +180,14 @@ nav.menu a.active::after{
   text-decoration:none; font-family:'PT Serif',serif;
   box-shadow:0 10px 26px rgba(242,211,94,.25);
   border:none; cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
 }
+.btn:active{transform:scale(.96); box-shadow:0 4px 14px rgba(242,211,94,.2);}
 .btn.ghost{
   background:transparent; color:var(--gold);
   border:1px solid rgba(247,234,138,.4); box-shadow:none;
 }
+.btn.ghost:active{transform:scale(.96); background:rgba(247,234,138,.06);}
 .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
 
 /* ===== STATUS PILL ===== */
@@ -177,8 +220,11 @@ nav.menu a.active::after{
 }
 .flip-inner{
   position:relative; width:100%; height:100%; text-align:left;
-  transition:transform .7s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;
+  transition:transform .6s cubic-bezier(.3,.8,.3,1); transform-style:preserve-3d;
+  will-change:transform;
 }
+.flip-card:active .flip-inner{transform:scale(.98);}
+.flip-card.flipped:active .flip-inner{transform:rotateY(180deg) scale(.98);}
 .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
 .flip-front,.flip-back{
   position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
