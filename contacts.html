@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контакты — Школа Мгера Шакаряна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
+    <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
+    <nav class="menu">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О школе</a>
+      <a href="program.html">Программа</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="contacts.html" class="active">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Контакты</div>
+    <h1>Будем рады<br>ответить</h1>
+    <p class="lede">Замените контакты ниже на настоящие — телефон, почту, город и соцсети школы.</p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap contact-grid">
+
+    <div class="contact-list">
+      <div class="contact-item">
+        <div class="ico">✆</div>
+        <div>
+          <h5>Телефон</h5>
+          <p>+7 (000) 000-00-00</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ico">✉</div>
+        <div>
+          <h5>Email</h5>
+          <p>info@school-example.org</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ico">⌂</div>
+        <div>
+          <h5>Город и адрес проведения</h5>
+          <p>Укажите город и адрес встреч школы</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ico">✦</div>
+        <div>
+          <h5>Соцсети</h5>
+          <p>Instagram · Telegram · YouTube</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('.sent').style.display='block';">
+      <h4>Оставить заявку</h4>
+      <p class="sub">Расскажите немного о себе — мы свяжемся в ближайшее время.</p>
+      <div class="field">
+        <label for="name">Имя</label>
+        <input id="name" type="text" placeholder="Ваше имя" required>
+      </div>
+      <div class="field">
+        <label for="contact">Телефон или email</label>
+        <input id="contact" type="text" placeholder="Как с вами связаться" required>
+      </div>
+      <div class="field">
+        <label for="msg">Сообщение</label>
+        <textarea id="msg" rows="4" placeholder="Ваш вопрос или комментарий"></textarea>
+      </div>
+      <button class="btn" type="submit" style="width:100%;">Отправить</button>
+      <p class="sent" style="display:none; margin-top:14px; font-size:13.5px; color:var(--gold); text-align:center;">
+        Спасибо! Форма пока демонстрационная — подключите её к своей почте или сервису рассылок.
+      </p>
+    </form>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>
+  <div class="meta">Школа Мгера Шакаряна · {{YEAR}}</div>
+</footer>
+
+<script>
+  document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+</script>
+</body>
+</html>

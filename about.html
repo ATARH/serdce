@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>О школе — Школа Мгера Шакаряна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
+    <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
+    <nav class="menu">
+      <a href="index.html">Главная</a>
+      <a href="about.html" class="active">О школе</a>
+      <a href="program.html">Программа</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">О школе</div>
+    <h1>Пять дней, которые<br>ведут вглубь</h1>
+    <p class="lede">
+      Школа Мгера Шакаряна — это очное пятидневное обучение для тех, кто
+      хочет не просто узнать о вере, а прожить путь ученика: от основания
+      до практического служения.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="eyebrow">Основатель</div>
+    <h2 class="section-title">Мгер Шакарян</h2>
+    <p class="section-lede" style="margin-bottom:34px;">
+      <em>Замените этот текст на реальную биографию.</em> Здесь коротко
+      рассказывается о пути основателя школы — как формировалось служение,
+      какой опыт стоит за программой и почему школа построена именно так,
+      вокруг пяти дней и пяти тем.
+    </p>
+    <div class="card-grid">
+      <div class="premium-card">
+        <div class="num">Путь</div>
+        <h5>Служение</h5>
+        <p>Годы практического служения в общине, которые легли в основу программы школы.</p>
+      </div>
+      <div class="premium-card">
+        <div class="num">Опыт</div>
+        <h5>Наставничество</h5>
+        <p>Опыт личного сопровождения учеников — от первых вопросов до самостоятельного служения.</p>
+      </div>
+      <div class="premium-card">
+        <div class="num">Цель</div>
+        <h5>Передача</h5>
+        <p>Желание передать не только знание, но и практику живой веры следующему поколению.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="eyebrow">Миссия</div>
+    <h2 class="section-title">Зачем существует школа</h2>
+    <p class="section-lede">
+      Мы верим, что вера взрослеет не от объёма прочитанного, а от того,
+      что прожито и применено. Поэтому программа школы построена как путь
+      из пяти шагов — от личного основания до посланничества в мир —
+      а не как набор разрозненных лекций.
+    </p>
+    <div class="btn-row" style="justify-content:flex-start;">
+      <a href="program.html" class="btn">Программа школы</a>
+      <a href="contacts.html" class="btn ghost">Задать вопрос</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>
+  <div class="meta">Школа Мгера Шакаряна · {{YEAR}}</div>
+</footer>
+
+<script>
+  document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+</script>
+</body>
+</html>

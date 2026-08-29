@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Программа — Школа Мгера Шакаряна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
+    <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
+    <nav class="menu">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О школе</a>
+      <a href="program.html" class="active">Программа</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Программа</div>
+    <h1>Пять дней школы</h1>
+    <p class="lede">
+      Каждый день — отдельная тема и своя ступень пути. Нажмите на карточку,
+      чтобы увидеть, из чего состоит день.
+    </p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="flip-grid" id="days-grid"></div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap center" style="max-width:640px;">
+    <div class="eyebrow">Готовы начать?</div>
+    <h2 class="section-title">Запись на ближайший поток</h2>
+    <p class="section-lede center">
+      Оставьте заявку — мы свяжемся и расскажем о датах, месте проведения
+      и о том, как подготовиться к пяти дням школы.
+    </p>
+    <div class="btn-row">
+      <a href="contacts.html" class="btn">Оставить заявку</a>
+      <a href="about.html" class="btn ghost">О школе</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>
+  <div class="meta">Школа Мгера Шакаряна · {{YEAR}}</div>
+</footer>
+
+<script src="days-data.js"></script>
+<script>
+  document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+
+  const grid = document.getElementById('days-grid');
+  window.SCHOOL_DAYS.forEach(day=>{
+    const card = document.createElement('div');
+    card.className = 'flip-card';
+    card.innerHTML = `
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div>
+            <div class="day-num">День ${day.num}</div>
+            <h3>${day.title}</h3>
+            <p>${day.short}</p>
+          </div>
+          <div class="hint">нажмите, чтобы открыть →</div>
+        </div>
+        <div class="flip-back">
+          <h4>${day.title}</h4>
+          <ul>${day.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+          <div class="hint">← назад</div>
+        </div>
+      </div>`;
+    card.addEventListener('click', ()=>card.classList.toggle('flipped'));
+    grid.appendChild(card);
+  });
+</script>
+</body>
+</html>

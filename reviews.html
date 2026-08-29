@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отзывы — Школа Мгера Шакаряна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
+    <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
+    <nav class="menu">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О школе</a>
+      <a href="program.html">Программа</a>
+      <a href="reviews.html" class="active">Отзывы</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Отзывы</div>
+    <h1>Что говорят<br>выпускники</h1>
+    <p class="lede">Замените эти карточки на реальные отзывы учеников школы.</p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="testi-grid">
+
+      <div class="testi-card">
+        <div class="quote-mark">“</div>
+        <p class="quote">Пять дней вместили больше, чем месяцы самостоятельного чтения. Особенно ценно было практическое служение на четвёртый день — теория наконец соединилась с жизнью.</p>
+        <div class="who">
+          <div class="avatar">А</div>
+          <div>
+            <div class="name">Анна К.</div>
+            <div class="role">выпускница школы</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="quote-mark">“</div>
+        <p class="quote">Атмосфера школы — то, что запомнилось больше всего. Не лекции «сверху вниз», а честный разговор и молитва вместе с наставниками.</p>
+        <div class="who">
+          <div class="avatar">Д</div>
+          <div>
+            <div class="name">Давид М.</div>
+            <div class="role">выпускник школы</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="quote-mark">“</div>
+        <p class="quote">День о молитве стал для меня поворотным. До школы молитва была привычкой, после — стала живым разговором.</p>
+        <div class="who">
+          <div class="avatar">М</div>
+          <div>
+            <div class="name">Мария С.</div>
+            <div class="role">выпускница школы</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="quote-mark">“</div>
+        <p class="quote">Рекомендую всем, кто чувствует, что готов сделать следующий шаг в вере, но не знает, с чего начать. Программа выстроена очень бережно и последовательно.</p>
+        <div class="who">
+          <div class="avatar">Г</div>
+          <div>
+            <div class="name">Гор А.</div>
+            <div class="role">выпускник школы</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap center" style="max-width:600px;">
+    <div class="eyebrow">Хотите поделиться</div>
+    <h2 class="section-title">своим опытом?</h2>
+    <p class="section-lede center">Напишите нам — с радостью добавим ваш отзыв на эту страницу.</p>
+    <div class="btn-row">
+      <a href="contacts.html" class="btn">Написать отзыв</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>
+  <div class="meta">Школа Мгера Шакаряна · {{YEAR}}</div>
+</footer>
+
+<script>
+  document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+</script>
+</body>
+</html>

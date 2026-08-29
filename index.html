@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Школа Мгера Шакаряна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
+    <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
+    <nav class="menu">
+      <a href="index.html" class="active">Главная</a>
+      <a href="about.html">О школе</a>
+      <a href="program.html">Программа</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="home-hero">
+  <div class="kicker">Школа Мгера Шакаряна</div>
+  <h1>Пять дней,<br>меняющих сердце</h1>
+  <p class="verse">
+    «И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим»
+    <cite>Иеремии 29:13</cite>
+  </p>
+  <div class="btn-row">
+    <a href="program.html" class="btn">Смотреть программу</a>
+    <a href="about.html" class="btn ghost">О школе</a>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="eyebrow">Коротко о школе</div>
+    <h2 class="section-title">Путь длиной в пять дней</h2>
+    <p class="section-lede">
+      Школа Мгера Шакаряна — это пять дней очного погружения: от основания веры
+      до практического служения. Каждый день — отдельная ступень, но вместе
+      они складываются в цельный путь ученика.
+    </p>
+    <div class="card-grid">
+      <div class="premium-card">
+        <div class="num">01</div>
+        <h5>Живое общение</h5>
+        <p>Небольшие группы, открытый диалог и время для вопросов после каждой темы.</p>
+      </div>
+      <div class="premium-card">
+        <div class="num">02</div>
+        <h5>Глубина Писания</h5>
+        <p>Каждый день строится вокруг конкретного отрывка и его практического приложения.</p>
+      </div>
+      <div class="premium-card">
+        <div class="num">03</div>
+        <h5>Практика, не только теория</h5>
+        <p>Молитвенные практикумы и разбор реальных ситуаций служения.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="eyebrow">Программа</div>
+    <h2 class="section-title">Пять дней школы</h2>
+    <p class="section-lede">Нажмите на карточку, чтобы увидеть, из чего состоит день.</p>
+  </div>
+  <div class="wrap">
+    <div class="flip-grid" id="home-preview"></div>
+  </div>
+  <div class="wrap" style="margin-top:40px; text-align:center;">
+    <a href="program.html" class="btn ghost">Вся программа →</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>
+  <div class="meta">Школа Мгера Шакаряна · {{YEAR}}</div>
+</footer>
+
+<script src="days-data.js"></script>
+<script>
+  document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+  document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+
+  const preview = document.getElementById('home-preview');
+  if(preview && window.SCHOOL_DAYS){
+    window.SCHOOL_DAYS.forEach(day=>{
+      const card = document.createElement('div');
+      card.className = 'flip-card';
+      card.innerHTML = `
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div>
+              <div class="day-num">День ${day.num}</div>
+              <h3>${day.title}</h3>
+              <p>${day.short}</p>
+            </div>
+            <div class="hint">нажмите, чтобы открыть →</div>
+          </div>
+          <div class="flip-back">
+            <h4>${day.title}</h4>
+            <ul>${day.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+            <div class="hint">← назад</div>
+          </div>
+        </div>`;
+      card.addEventListener('click', ()=>card.classList.toggle('flipped'));
+      preview.appendChild(card);
+    });
+  }
+</script>
+</body>
+</html>
