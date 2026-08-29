@@ -258,6 +258,14 @@ nav.menu a.active::after{
 .flip-card{
   perspective:1400px; height:300px; cursor:pointer;
 }
+/* левитация: карточка мягко покачивается вверх-вниз, пока наведён курсор */
+@keyframes card-levitate{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-9px); }
+}
+.flip-card:hover{
+  animation:card-levitate 2.4s ease-in-out infinite;
+}
 .flip-inner{
   position:relative; width:100%; height:100%; text-align:left;
   transition:transform .6s cubic-bezier(.3,.8,.3,1); transform-style:preserve-3d;
@@ -273,15 +281,25 @@ nav.menu a.active::after{
   box-shadow:0 20px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.06);
 }
 .flip-front{
-  background:
-    radial-gradient(ellipse 120% 90% at 50% 110%, rgba(242,211,94,.16), transparent 65%),
-    var(--maroon);
+  background-color:var(--maroon);
+  background-size:cover;
+  background-position:center;
   justify-content:space-between;
+  position:absolute; /* переопределяется правилом выше, оставлено для ясности */
 }
 .flip-front .day-num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:15px; letter-spacing:.06em;}
-.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:14px 0 8px; line-height:1.15;}
-.flip-front p{font-size:13.5px; color:rgba(255,249,200,.62);}
-.flip-front .hint{margin-top:auto; font-size:12px; color:rgba(247,234,138,.55); font-style:italic; font-family:'Cormorant Garamond',serif;}
+.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:14px 0 8px; line-height:1.15; text-shadow:0 2px 12px rgba(0,0,0,.6);}
+.flip-front p{font-size:13.5px; color:rgba(255,249,200,.78); text-shadow:0 1px 8px rgba(0,0,0,.7);}
+.flip-front .hint{margin-top:auto; font-size:12px; color:rgba(247,234,138,.7); font-style:italic; font-family:'Cormorant Garamond',serif;}
+.tap-badge{
+  position:absolute; top:14px; right:14px;
+  width:30px; height:30px; border-radius:50%;
+  background:rgba(11,2,0,.55);
+  border:1px solid rgba(247,234,138,.45);
+  color:var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+}
 .flip-back{
   background:linear-gradient(160deg, var(--ember), var(--maroon));
   transform:rotateY(180deg);
@@ -446,6 +464,7 @@ window.SCHOOL_DAYS = [
     num: "I",
     title: "Встреча",
     short: "Первый шаг — вернуться к сердцу Бога и узнать Его адрес.",
+    img: "day1.jpg",
     points: [
       "Вернись к Моему сердцу",
       "Адрес Бога",
@@ -456,6 +475,7 @@ window.SCHOOL_DAYS = [
     num: "II",
     title: "Голос Бога",
     short: "Три служения о том, как слышать и узнавать голос Бога.",
+    img: "day2.jpg",
     points: [
       "Как слышать голос Бога",
       "Как отличать Его голос от других голосов",
@@ -466,6 +486,7 @@ window.SCHOOL_DAYS = [
     num: "III",
     title: "Присутствие",
     short: "Как войти в Божье Присутствие и удержать его.",
+    img: "day3.jpg",
     points: [
       "Как следовать за Богом",
       "Как входить в Божье Присутствие",
@@ -476,6 +497,7 @@ window.SCHOOL_DAYS = [
     num: "IV",
     title: "Святой Дух",
     short: "Знакомство с Личностью, характером и сердцем Святого Духа.",
+    img: "day4.jpg",
     points: [
       "Святой Дух — Кто Он",
       "Характер и сердце Святого Духа",
@@ -486,6 +508,7 @@ window.SCHOOL_DAYS = [
     num: "V",
     title: "Святое Святых",
     short: "Свидание с Богом за пределами внешнего двора.",
+    img: "day5.jpg",
     points: [
       "Свидание с Богом",
       "Покидая внешний двор",
