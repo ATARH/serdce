@@ -11,386 +11,113 @@
 <style>
 :root{
   --ink:#0B0200;
-  --ember:#3E1003;
-  --maroon:#4E0E02;
+  --ember:#2B0401; /* Темно-бордовый */
+  --maroon:#1A0400; /* Темно-бордовый для карточек */
   --amber:#F2D35E;
   --gold:#F7EA8A;
   --cream:#FFF9C8;
 }
 
 *{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-behavior:smooth;}
-body{
-  background:var(--ink);
-  color:var(--cream);
-  font-family:'PT Serif', Georgia, serif;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-  min-height:100vh;
+html{scroll-behavior:smooth; max-width:100%; overflow-x:hidden;}
+body{ 
+  background:var(--ink); color:var(--cream); font-family:'PT Serif', Georgia, serif; 
+  line-height:1.65; -webkit-font-smoothing:antialiased; min-height:100vh; 
+  max-width:100%; overflow-x:hidden; /* Запрещаем прокрутку вбок */
 }
-/* быстрый, "лёгкий" тап на мобильных — без серой вспышки и без 300мс задержки */
-a, button, .flip-card, .btn, .premium-card, .status-pill{
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-}
-/* уважаем настройку "уменьшить анимацию" — и заодно экономим ресурсы слабых телефонов */
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
-}
-body::before{
-  content:"";
-  position:fixed; inset:0; z-index:-2;
-  background:
-    radial-gradient(ellipse 90% 55% at 50% 100%, rgba(78,14,2,.5), transparent 70%),
-    radial-gradient(ellipse 70% 40% at 15% 0%, rgba(62,16,3,.32), transparent 70%),
-    var(--ink);
-}
-body::after{
-  content:"";
-  position:fixed; inset:0; z-index:-1; opacity:.45;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.009) 0 1px, transparent 1px 4px);
-}
+a, button, .flip-card, .btn, .premium-card, .status-pill{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+@media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;} }
+body::before{ content:""; position:fixed; inset:0; z-index:-2; background: radial-gradient(ellipse 90% 55% at 50% 100%, rgba(43,4,1,.5), transparent 70%), radial-gradient(ellipse 70% 40% at 15% 0%, rgba(26,4,0,.32), transparent 70%), var(--ink); }
+body::after{ content:""; position:fixed; inset:0; z-index:-1; opacity:.45; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255,255,255,.009) 0 1px, transparent 1px 4px); }
 
 h1,h2,h3,.serif-display{font-family:'Playfair Display','PT Serif',serif;}
 a{color:inherit;}
-
 .wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
-section{padding:100px 0;}
-section.tight{padding:70px 0;}
-section + section{border-top:1px solid rgba(247,234,138,.08);}
+section{padding:100px 0;} section.tight{padding:70px 0;} section + section{border-top:1px solid rgba(247,234,138,.08);}
+
+/* Эффект всплытия при скролле */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out, border-color 0.25s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ===== NAV ===== */
-header.site-header{
-  position:sticky; top:0; z-index:50;
-  background:rgba(11,2,0,.35);
-  backdrop-filter:blur(18px) saturate(160%);
-  -webkit-backdrop-filter:blur(18px) saturate(160%);
-  border-bottom:1px solid rgba(247,234,138,.1);
-}
-/* На страницах с видео в хиро блюр может не сработать на части мобильных браузеров —
-   держим фон шапки чуть плотнее, чтобы текст меню было видно в любом случае */
-header.site-header.over-video{
-  background:rgba(11,2,0,.55);
-}
-.nav-inner{
-  max-width:1120px; margin:0 auto; padding:0 40px;
-  height:76px; display:flex; align-items:center; justify-content:space-between;
-}
-.logo{
-  font-family:'Playfair Display',serif; font-weight:700; font-size:19px;
-  color:var(--gold); text-decoration:none; letter-spacing:.01em;
-  line-height:1.2;
-}
+header.site-header{ position:sticky; top:0; z-index:50; background:rgba(11,2,0,.35); backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%); border-bottom:1px solid rgba(247,234,138,.1); }
+header.site-header.over-video{ background:rgba(11,2,0,.55); }
+.nav-inner{ max-width:1120px; margin:0 auto; padding:0 40px; height:76px; display:flex; align-items:center; justify-content:space-between; }
+.logo{ font-family:'Playfair Display',serif; font-weight:700; font-size:19px; color:var(--gold); text-decoration:none; letter-spacing:.01em; line-height:1.2; }
 .logo small{display:block; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11.5px; color:var(--amber); letter-spacing:.08em; font-weight:400; margin-top:2px;}
 nav.menu{display:flex; gap:30px;}
-nav.menu a{
-  font-size:14px; text-decoration:none; color:rgba(255,249,200,.78);
-  position:relative; padding:6px 0; transition:color .2s;
-}
-nav.menu a:hover{color:var(--gold);}
-nav.menu a.active{color:var(--gold);}
-nav.menu a.active::after{
-  content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px;
-  background:var(--amber);
-}
+nav.menu a{ font-size:14px; text-decoration:none; color:rgba(255,249,200,.78); position:relative; padding:6px 0; transition:color .2s; }
+nav.menu a:hover{color:var(--gold);} nav.menu a.active{color:var(--gold);}
+nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background:var(--amber); }
 .nav-toggle{display:none; background:none; border:none; color:var(--gold); font-size:22px; cursor:pointer; padding:10px; line-height:1;}
 .nav-toggle:active{transform:scale(.9);}
 
 /* ===== БЕГУЩАЯ СТРОКА ===== */
-.marquee{
-  overflow:hidden;
-  background:transparent;
-  padding:12px 0;
-}
-.marquee-track{
-  display:flex; align-items:center;
-  width:max-content;
-  animation:marquee-scroll 28s linear infinite;
-  will-change:transform;
-}
+.marquee{ overflow:hidden; background:transparent; padding:12px 0; }
+.marquee-track{ display:flex; align-items:center; width:max-content; animation:marquee-scroll 28s linear infinite; will-change:transform; }
 .marquee:hover .marquee-track{animation-play-state:paused;}
-.marquee-track span{
-  font-family:'Cormorant Garamond',serif; font-style:italic;
-  letter-spacing:.1em; text-transform:uppercase;
-  font-size:13.5px; color:var(--gold);
-  white-space:nowrap; display:flex; align-items:center; gap:34px;
-  padding-right:34px;
-}
+.marquee-track span{ font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.1em; text-transform:uppercase; font-size:13.5px; color:var(--gold); white-space:nowrap; display:flex; align-items:center; gap:34px; padding-right:34px; }
 .marquee-track span::after{content:"✦"; color:var(--amber); font-style:normal;}
-@keyframes marquee-scroll{
-  from{transform:translateX(0);}
-  to{transform:translateX(-50%);}
-}
-@media (prefers-reduced-motion:reduce){
-  .marquee-track{animation-play-state:paused;}
-}
+@keyframes marquee-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+@media (prefers-reduced-motion:reduce){ .marquee-track{animation-play-state:paused;} }
 
 @media(max-width:760px){
   .nav-inner{padding:0 22px;}
-  header.site-header{
-    /* блюр дешевле на слабых телефонах при меньшем радиусе — разница на глаз незаметна */
-    backdrop-filter:blur(10px) saturate(140%);
-    -webkit-backdrop-filter:blur(10px) saturate(140%);
-  }
-  nav.menu{
-    position:fixed; top:76px; left:0; right:0; z-index:49;
-    flex-direction:column; gap:0;
-    background:rgba(11,2,0,.95);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-    border-bottom:1px solid rgba(247,234,138,.12);
-    /* анимируем только transform/opacity — это композитится на GPU и не подтормаживает,
-       в отличие от анимации max-height, которая пересчитывает раскладку на каждый кадр */
-    transform:translateY(-10px);
-    opacity:0;
-    pointer-events:none;
-    transition:transform .22s cubic-bezier(.3,.7,.4,1), opacity .18s ease;
-    will-change:transform, opacity;
-  }
+  header.site-header{ backdrop-filter:blur(10px) saturate(140%); -webkit-backdrop-filter:blur(10px) saturate(140%); }
+  nav.menu{ position:fixed; top:76px; left:0; right:0; z-index:49; flex-direction:column; gap:0; background:rgba(11,2,0,.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(247,234,138,.12); transform:translateY(-10px); opacity:0; pointer-events:none; transition:transform .22s cubic-bezier(.3,.7,.4,1), opacity .18s ease; will-change:transform, opacity; }
   nav.menu.open{transform:translateY(0); opacity:1; pointer-events:auto;}
   nav.menu a{padding:16px 22px; border-top:1px solid rgba(255,255,255,.06); display:block;}
   nav.menu a:active{background:rgba(247,234,138,.06);}
-  .nav-toggle{display:block;}
-  body::after{opacity:.28;} /* текстура-шум легче на мобильном рендере */
+  .nav-toggle{display:block;} body::after{opacity:.28;}
 }
 
-/* ===== HERO (общий для внутренних страниц) ===== */
+/* ===== HERO ===== */
 .page-hero{padding:90px 0 70px; text-align:center; position:relative;}
-.page-hero.has-video{
-  min-height:56vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  overflow:hidden; padding:70px 24px; isolation:isolate;
-}
-.page-hero .video-bg{
-  position:absolute; inset:0; z-index:-3;
-  width:100%; height:100%; object-fit:cover;
-}
-.page-hero .video-scrim{
-  position:absolute; inset:0; z-index:-2;
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 100%, rgba(78,14,2,.55), transparent 65%),
-    linear-gradient(180deg, rgba(11,2,0,.78) 0%, rgba(11,2,0,.5) 45%, rgba(11,2,0,.85) 100%);
-}
-.eyebrow{
-  font-family:'Cormorant Garamond',serif; font-style:italic;
-  letter-spacing:.16em; text-transform:uppercase;
-  color:var(--amber); font-size:14px; margin-bottom:18px;
-  display:flex; align-items:center; justify-content:center; gap:12px;
-}
+.eyebrow{ font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.16em; text-transform:uppercase; color:var(--amber); font-size:14px; margin-bottom:18px; display:flex; align-items:center; justify-content:center; gap:12px; }
 .eyebrow::before,.eyebrow::after{content:""; width:28px; height:1px; background:var(--amber); opacity:.6;}
-.page-hero h1{
-  font-size:clamp(34px,5.5vw,58px); font-weight:800; color:var(--gold);
-  line-height:1.08; margin-bottom:20px;
-}
-.page-hero .lede{
-  max-width:620px; margin:0 auto; color:rgba(255,249,200,.75); font-size:17px;
-}
-
-/* центрированная секция-заголовок */
+.page-hero h1{ font-size:clamp(34px,5.5vw,58px); font-weight:800; color:var(--gold); line-height:1.08; margin-bottom:20px; }
+.page-hero .lede{ max-width:620px; margin:0 auto; color:rgba(255,249,200,.75); font-size:17px; }
 .section-title{font-size:clamp(28px,4vw,40px); font-weight:700; color:var(--gold); margin-bottom:14px;}
 .section-lede{max-width:640px; color:rgba(255,249,200,.72); font-size:16.5px; margin-bottom:50px;}
-.center{text-align:center; margin-left:auto; margin-right:auto;}
-
-/* ===== HOME HERO ===== */
-.home-hero{
-  min-height:78vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:100px 24px; position:relative; overflow:hidden; isolation:isolate;
-}
-.home-hero .video-bg{
-  position:absolute; inset:0; z-index:-3;
-  width:100%; height:100%; object-fit:cover;
-}
-.home-hero .video-scrim{
-  /* тёмная дымка поверх видео — держит контраст текста и палитру сайта */
-  position:absolute; inset:0; z-index:-2;
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 100%, rgba(78,14,2,.55), transparent 65%),
-    linear-gradient(180deg, rgba(11,2,0,.75) 0%, rgba(11,2,0,.55) 40%, rgba(11,2,0,.85) 100%);
-}
-.home-hero .kicker{
-  font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber);
-  letter-spacing:.22em; text-transform:uppercase; font-size:14px; margin-bottom:26px; opacity:.9;
-}
-.home-hero h1{
-  font-size:clamp(42px,8vw,84px); font-weight:800; line-height:1.03; letter-spacing:-.01em;
-  background:linear-gradient(180deg,#fff8dc 0%, var(--gold) 35%, var(--amber) 65%, var(--ember) 100%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  filter:drop-shadow(0 0 30px rgba(242,211,94,.3));
-  margin-bottom:24px;
-}
-.home-hero .verse{
-  font-family:'PT Serif',serif; font-style:italic; font-size:clamp(15px,1.8vw,19px);
-  color:var(--cream); max-width:600px; opacity:.9; margin-bottom:38px;
-}
-.home-hero .verse cite{display:block; margin-top:10px; font-style:normal; color:var(--amber); font-size:13px; letter-spacing:.05em;}
 
 /* ===== BUTTONS ===== */
-@keyframes btn-ember{
-  0%,100%{ box-shadow:0 10px 26px rgba(242,211,94,.28), 0 0 14px rgba(242,211,94,.35), 0 0 2px rgba(255,247,214,.6); }
-  50%{ box-shadow:0 10px 32px rgba(242,211,94,.5), 0 0 30px rgba(242,211,94,.7), 0 0 6px rgba(255,247,214,.85); }
-}
-@keyframes btn-ember-ghost{
-  0%,100%{ box-shadow:0 0 0 rgba(242,211,94,0); border-color:rgba(247,234,138,.4); }
-  50%{ box-shadow:0 0 20px rgba(242,211,94,.4); border-color:rgba(247,234,138,.85); }
-}
-.btn{
-  display:inline-block; padding:13px 28px; border-radius:999px;
-  background:linear-gradient(180deg, var(--gold), var(--amber));
-  color:#2a1000; font-weight:700; font-size:14px;
-  text-decoration:none; font-family:'PT Serif',serif;
-  box-shadow:0 10px 26px rgba(242,211,94,.25);
-  border:none; cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease;
-  animation:btn-ember 2.6s ease-in-out infinite;
-}
+@keyframes btn-ember{ 0%,100%{ box-shadow:0 10px 26px rgba(242,211,94,.28), 0 0 14px rgba(242,211,94,.35), 0 0 2px rgba(255,247,214,.6); } 50%{ box-shadow:0 10px 32px rgba(242,211,94,.5), 0 0 30px rgba(242,211,94,.7), 0 0 6px rgba(255,247,214,.85); } }
+@keyframes btn-ember-ghost{ 0%,100%{ box-shadow:0 0 0 rgba(242,211,94,0); border-color:rgba(247,234,138,.4); } 50%{ box-shadow:0 0 20px rgba(242,211,94,.4); border-color:rgba(247,234,138,.85); } }
+.btn{ display:inline-block; padding:13px 28px; border-radius:999px; background:linear-gradient(180deg, var(--gold), var(--amber)); color:#2a1000; font-weight:700; font-size:14px; text-decoration:none; font-family:'PT Serif',serif; box-shadow:0 10px 26px rgba(242,211,94,.25); border:none; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; animation:btn-ember 2.6s ease-in-out infinite; }
 .btn:active{transform:scale(.96); box-shadow:0 4px 14px rgba(242,211,94,.2);}
-.btn.ghost{
-  background:transparent; color:var(--gold);
-  border:1px solid rgba(247,234,138,.4); box-shadow:none;
-  animation:btn-ember-ghost 2.6s ease-in-out infinite;
-}
+.btn.ghost{ background:transparent; color:var(--gold); border:1px solid rgba(247,234,138,.4); box-shadow:none; animation:btn-ember-ghost 2.6s ease-in-out infinite; }
 .btn.ghost:active{transform:scale(.96); background:rgba(247,234,138,.06);}
 .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
 
-/* ===== STATUS PILL ===== */
-.status-pill{
-  display:inline-flex; align-items:center; gap:9px; padding:9px 16px;
-  background:rgba(242,211,94,.1); border:1px solid rgba(242,211,94,.4);
-  border-radius:999px; font-size:13px; font-weight:700; color:var(--gold);
-  margin-bottom:26px;
-}
-.status-dot{width:7px; height:7px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
+/* ===== БЛОК "ОБО МНЕ" (фото + текст) ===== */
+.founder-grid{ display:grid; grid-template-columns:340px 1fr; gap:48px; align-items:start; }
+.founder-photo{ position:relative; }
+.founder-photo-inner{ aspect-ratio:3/4; border-radius:18px; overflow:hidden; border:1px solid rgba(247,234,138,.2); box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06); }
+.founder-photo-inner img{ width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block; }
+.founder-bio h2{ margin-bottom:24px; }
+.founder-bio p{ margin-bottom:20px; max-width:100%; font-size:16.5px; color:rgba(255,249,200,.72); }
+.founder-bio .eyebrow { justify-content: flex-start; }
 
-/* ===== CARDS (premium hairline) ===== */
-.card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-.premium-card{
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:14px;
-  padding:28px 26px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); transition:border-color .25s;
+/* На телефонах ставим фото СВЕРХУ, текст СНИЗУ */
+@media(max-width:760px){
+  .founder-grid{ display:flex; flex-direction:column; align-items:center; }
+  .founder-photo{ width:100%; max-width:320px; margin-bottom:32px; }
+  .founder-bio{ width:100%; } 
 }
-.premium-card:hover{border-color:rgba(247,234,138,.35);}
-.premium-card .num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:14px; margin-bottom:10px;}
-.premium-card h5{font-family:'Playfair Display',serif; color:var(--gold); font-size:19px; margin-bottom:8px;}
-.premium-card p{font-size:14.5px; color:rgba(255,249,200,.65);}
-
-/* ===== FLIP CARDS (Программа — 5 дней) ===== */
-.flip-grid{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:22px;
-}
-.flip-card{
-  perspective:1400px; height:300px; cursor:pointer;
-}
-.flip-inner{
-  position:relative; width:100%; height:100%; text-align:left;
-  transition:transform .6s cubic-bezier(.3,.8,.3,1); transform-style:preserve-3d;
-  will-change:transform;
-}
-.flip-card:active .flip-inner{transform:scale(.98);}
-.flip-card.flipped:active .flip-inner{transform:rotateY(180deg) scale(.98);}
-.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
-.flip-front,.flip-back{
-  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
-  border-radius:16px; padding:26px 24px; display:flex; flex-direction:column;
-  border:1px solid rgba(247,234,138,.16);
-  box-shadow:0 20px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.06);
-}
-.flip-front{
-  background:
-    radial-gradient(ellipse 120% 90% at 50% 110%, rgba(242,211,94,.16), transparent 65%),
-    var(--maroon);
-  justify-content:space-between;
-}
-.flip-front .day-num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:15px; letter-spacing:.06em;}
-.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:14px 0 8px; line-height:1.15;}
-.flip-front p{font-size:13.5px; color:rgba(255,249,200,.62);}
-.flip-front .hint{margin-top:auto; font-size:12px; color:rgba(247,234,138,.55); font-style:italic; font-family:'Cormorant Garamond',serif;}
-.flip-back{
-  background:linear-gradient(160deg, var(--ember), var(--maroon));
-  transform:rotateY(180deg);
-}
-.flip-back h4{font-family:'Playfair Display',serif; color:var(--gold); font-size:18px; margin-bottom:14px;}
-.flip-back ul{list-style:none; display:flex; flex-direction:column; gap:10px; font-size:13.5px; color:rgba(255,249,200,.85);}
-.flip-back li{padding-left:18px; position:relative;}
-.flip-back li::before{content:"✦"; position:absolute; left:0; top:1px; color:var(--amber); font-size:11px;}
-.flip-back .hint{margin-top:auto; font-size:12px; color:rgba(247,234,138,.5); font-style:italic; font-family:'Cormorant Garamond',serif;}
-
-@media(max-width:600px){
-  .card-grid{grid-template-columns:1fr;}
-  .flip-grid{grid-template-columns:1fr 1fr;}
-  .flip-card{height:260px;}
-}
-@media(max-width:420px){ .flip-grid{grid-template-columns:1fr;} }
-
-/* ===== TESTIMONIALS ===== */
-.testi-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
-.testi-card{
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:16px;
-  padding:30px 28px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-}
-.testi-card .quote-mark{font-family:'Playfair Display',serif; color:var(--amber); font-size:38px; line-height:1; opacity:.5; margin-bottom:6px;}
-.testi-card p.quote{font-family:'PT Serif',serif; font-style:italic; font-size:15.5px; color:rgba(255,249,200,.88); margin-bottom:18px;}
-.testi-card .who{display:flex; align-items:center; gap:12px;}
-.testi-card .avatar{
-  width:40px; height:40px; border-radius:50%;
-  background:linear-gradient(160deg,var(--gold),var(--amber));
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Playfair Display',serif; font-weight:700; color:#2a1000; font-size:15px;
-}
-.testi-card .name{font-family:'Playfair Display',serif; color:var(--gold); font-size:14.5px;}
-.testi-card .role{font-size:12.5px; color:rgba(255,249,200,.55);}
-@media(max-width:700px){.testi-grid{grid-template-columns:1fr;}}
-
-/* ===== CONTACTS ===== */
-.contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;}
-.contact-list{display:flex; flex-direction:column; gap:22px;}
-.contact-item{
-  display:flex; gap:16px; align-items:flex-start;
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08);
-  border-radius:14px; padding:20px 22px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-}
-.contact-item .ico{
-  width:38px; height:38px; border-radius:50%; flex:none;
-  background:rgba(242,211,94,.12); border:1px solid rgba(242,211,94,.35);
-  display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:16px;
-}
-.contact-item h5{font-family:'Playfair Display',serif; color:var(--gold); font-size:15.5px; margin-bottom:4px;}
-.contact-item p{font-size:14px; color:rgba(255,249,200,.72);}
-.contact-form{
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:16px;
-  padding:32px 30px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-}
-.contact-form h4{font-family:'Playfair Display',serif; color:var(--gold); font-size:19px; margin-bottom:6px;}
-.contact-form .sub{font-size:13.5px; color:rgba(255,249,200,.6); margin-bottom:22px;}
-.field{margin-bottom:16px; display:flex; flex-direction:column; gap:6px;}
-.field label{font-size:12.5px; color:var(--amber); font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.04em;}
-.field input,.field textarea{
-  background:rgba(11,2,0,.5); border:1px solid rgba(255,255,255,.12); border-radius:10px;
-  padding:11px 14px; color:var(--cream); font-family:'PT Serif',serif; font-size:14px;
-  outline:none; resize:vertical;
-}
-.field input:focus,.field textarea:focus{border-color:rgba(247,234,138,.5);}
-@media(max-width:760px){.contact-grid{grid-template-columns:1fr;}}
 
 /* ===== FOOTER ===== */
-footer.site-footer{
-  border-top:1px solid rgba(247,234,138,.08);
-  padding:44px 0; text-align:center;
-}
-footer.site-footer .verse-line{
-  font-family:'PT Serif',serif; font-style:italic; color:rgba(255,249,200,.6);
-  font-size:13.5px; margin-bottom:10px;
-}
-footer.site-footer .meta{
-  font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.08em;
-  text-transform:uppercase; font-size:11.5px; color:rgba(247,234,138,.4);
-}
+footer.site-footer{ border-top:1px solid rgba(247,234,138,.08); padding:44px 0; text-align:center; }
+footer.site-footer .verse-line{ font-family:'PT Serif',serif; font-style:italic; color:rgba(255,249,200,.6); font-size:13.5px; margin-bottom:10px; }
+footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.08em; text-transform:uppercase; font-size:11.5px; color:rgba(247,234,138,.4); }
 
-@media(max-width:760px){
-  section{padding:64px 0;}
-  .wrap{padding:0 22px;}
-}
-
+@media(max-width:760px){ section{padding:64px 0;} .wrap{padding:0 22px;} }
 </style>
 </head>
 <body>
@@ -413,17 +140,14 @@ footer.site-footer .meta{
   <div class="marquee-track">
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
   </div>
 </div>
-
 
 <section class="page-hero">
   <div class="wrap">
@@ -436,36 +160,20 @@ footer.site-footer .meta{
 </section>
 
 <section class="tight">
-  <div class="wrap" style="display:grid; grid-template-columns:340px 1fr; gap:48px; align-items:start;">
+  <div class="wrap founder-grid">
 
-    <div style="position:relative;">
-      <div style="aspect-ratio:3/4; border-radius:18px; overflow:hidden; border:1px solid rgba(247,234,138,.2); box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);">
-        <img src="founder-photo.jpg" alt="Мгер Шакарян" style="width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block;">
+    <div class="founder-photo reveal">
+      <div class="founder-photo-inner">
+        <img src="founder-photo.jpg" alt="Мгер Шакарян">
       </div>
     </div>
 
-    <div>
+    <div class="founder-bio reveal" style="transition-delay: 0.2s;">
       <div class="eyebrow">Биография</div>
-      <h2 class="section-title" style="margin-bottom:24px;">Познание сердца Бога</h2>
-      <p class="section-lede" style="margin-bottom:20px; max-width:100%;">
-        Мгер Шакарян — пастор церкви «Сердце Бога» и основатель одноимённой
-        школы. Однажды Бог проговорил в его сердце и открыл новое
-        направление — «познание сердца Бога». Сейчас он живёт реальными
-        целями: показать людям, как дышит Бог, о чём думает Бог, о чём
-        мечтает Бог.
-      </p>
-      <p class="section-lede" style="margin-bottom:20px; max-width:100%;">
-        Из этого откровения родилась школа «Сердце Бога» — не курс лекций,
-        а живой путь длиной в пять дней, где каждый может лично встретиться
-        с Богом, научиться слышать Его голос и оставаться в Его Присутствии.
-      </p>
-      <p class="section-lede" style="margin-bottom:0; max-width:100%;">
-        Сегодня Мгер продолжает вкладываться в учеников — не только передавая
-        знание, но сопровождая каждого на пути от первой встречи с Богом до
-        собственного служения. Его цель — чтобы школа выросла в живое
-        движение людей, которые несут открытое ими сердце Бога дальше:
-        в свои семьи, города и служения.
-      </p>
+      <h2 class="section-title">Познание сердца Бога</h2>
+      <p>Мгер Шакарян — пастор церкви «Сердце Бога» и основатель одноимённой школы. Однажды Бог проговорил в его сердце и открыл новое направление — «познание сердца Бога». Сейчас он живёт реальными целями: показать людям, как дышит Бог, о чём думает Бог, о чём мечтает Бог.</p>
+      <p>Из этого откровения родилась школа «Сердце Бога» — не курс лекций, а живой путь длиной в пять дней, где каждый может лично встретиться с Богом, научиться слышать Его голос и оставаться в Его Присутствии.</p>
+      <p style="margin-bottom:0;">Сегодня Мгер продолжает вкладываться в учеников — не только передавая знание, но сопровождая каждого на пути от первой встречи с Богом до собственного служения. Его цель — чтобы школа выросла в живое движение людей, которые несут открытое ими сердце Бога дальше: в свои семьи, города и служения.</p>
       <div class="btn-row" style="justify-content:flex-start; margin-top:32px;">
         <a href="program.html" class="btn">Программа школы</a>
         <a href="contacts.html" class="btn ghost">Связаться</a>
@@ -477,15 +185,12 @@ footer.site-footer .meta{
 
 <section class="tight">
   <div class="wrap">
-    <div class="eyebrow">Миссия</div>
-    <h2 class="section-title">Зачем существует школа</h2>
-    <p class="section-lede">
-      Мы верим, что вера взрослеет не от объёма прочитанного, а от того,
-      что прожито и применено. Поэтому программа школы построена как путь
-      из пяти шагов — от личного основания до посланничества в мир —
-      а не как набор разрозненных лекций.
+    <div class="eyebrow reveal">Миссия</div>
+    <h2 class="section-title reveal">Зачем существует школа</h2>
+    <p class="section-lede reveal">
+      Мы верим, что вера взрослеет не от объёма прочитанного, а от того, что прожито и применено. Поэтому программа школы построена как путь из пяти шагов — от личного основания до посланничества в мир — а не как набор разрозненных лекций.
     </p>
-    <div class="btn-row" style="justify-content:flex-start;">
+    <div class="btn-row reveal" style="justify-content:flex-start;">
       <a href="about.html" class="btn ghost">О школе</a>
       <a href="contacts.html" class="btn ghost">Задать вопрос</a>
     </div>
@@ -503,40 +208,44 @@ footer.site-footer .meta{
 
 <canvas id="spark-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:9999;"></canvas>
 <script>
+  // Скрипт для всплытия элементов (фотографии и текста)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<script>
 (function(){
-  if (!window.matchMedia('(hover:hover)').matches) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var canvas = document.getElementById('spark-canvas');
-  var ctx = canvas.getContext('2d');
+  var canvas = document.getElementById('spark-canvas'); var ctx = canvas.getContext('2d');
   function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-  var particles = [];
-  var lastSpawn = 0;
-  window.addEventListener('mousemove', function(e){
-    var now = performance.now();
-    if (now - lastSpawn < 30) return;
-    lastSpawn = now;
-    for (var i=0;i<2;i++){
-      particles.push({
-        x:e.clientX, y:e.clientY,
-        vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.9)*0.6,
-        life:1, size:1.5+Math.random()*2,
-        color: Math.random() > 0.5 ? '247,234,138' : '242,211,94'
-      });
-    }
+  resize(); window.addEventListener('resize', resize); var particles = []; var lastSpawn = 0;
+
+  function spawn(x, y){
+    var now = performance.now(); if (now - lastSpawn < 16) return; lastSpawn = now;
+    for (var i=0;i<2;i++){ particles.push({ x:x, y:y, vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.9)*0.6, life:1, size:1.5+Math.random()*2, color: Math.random() > 0.5 ? '247,234,138' : '242,211,94' }); }
     if (particles.length > 120) particles.splice(0, particles.length-120);
-  });
+  }
+
+  // Для компьютера (мышь)
+  window.addEventListener('mousemove', function(e){ spawn(e.clientX, e.clientY); });
+  
+  // Для телефонов (палец)
+  window.addEventListener('touchmove', function(e){ if(e.touches[0]) spawn(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+  window.addEventListener('touchstart', function(e){ if(e.touches[0]) spawn(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+
   function tick(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     for (var i=particles.length-1;i>=0;i--){
-      var p = particles[i];
-      p.x += p.vx; p.y += p.vy; p.vy += 0.01; p.life -= 0.018;
+      var p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.01; p.life -= 0.018;
       if (p.life <= 0){ particles.splice(i,1); continue; }
-      ctx.beginPath();
-      ctx.fillStyle = 'rgba('+p.color+','+p.life+')';
-      ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2);
-      ctx.fill();
+      ctx.beginPath(); ctx.fillStyle = 'rgba('+p.color+','+p.life+')'; ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2); ctx.fill();
     }
     requestAnimationFrame(tick);
   }
