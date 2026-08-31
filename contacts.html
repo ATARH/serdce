@@ -67,7 +67,6 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 @media(max-width:760px){
   .nav-inner{padding:0 22px;}
   header.site-header{ backdrop-filter:blur(10px) saturate(140%); -webkit-backdrop-filter:blur(10px) saturate(140%); }
-  /* Меню открывается прямо под шапкой и бегущей строкой */
   nav.menu{ position:fixed; top:115px; left:0; right:0; z-index:49; flex-direction:column; gap:0; background:rgba(11,2,0,.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(247,234,138,.12); transform:translateY(-10px); opacity:0; pointer-events:none; transition:transform .22s cubic-bezier(.3,.7,.4,1), opacity .18s ease; will-change:transform, opacity; }
   nav.menu.open{transform:translateY(0); opacity:1; pointer-events:auto;}
   nav.menu a{padding:16px 22px; border-top:1px solid rgba(255,255,255,.06); display:block;}
