@@ -31,6 +31,17 @@ a{color:inherit;}
 .wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
 section{padding:100px 0;} section.tight{padding:70px 0;} section + section{border-top:1px solid rgba(247,234,138,.08);}
 
+/* Эффект всплытия при скролле */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out, border-color 0.25s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 header.site-header{ position:sticky; top:0; z-index:50; background:rgba(11,2,0,.35); backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%); border-bottom:1px solid rgba(247,234,138,.1); }
 header.site-header.over-video{ background:rgba(11,2,0,.55); }
 .nav-inner{ max-width:1120px; margin:0 auto; padding:0 40px; height:76px; display:flex; align-items:center; justify-content:space-between; }
@@ -94,11 +105,14 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
 
 .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-.premium-card{ background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:28px 26px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); transition:border-color .25s; }
+.premium-card{ background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:28px 26px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
 .premium-card:hover{border-color:rgba(247,234,138,.35);}
 .premium-card .num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:14px; margin-bottom:10px;}
 .premium-card h5{font-family:'Playfair Display',serif; color:var(--gold); font-size:19px; margin-bottom:8px;}
 .premium-card p{font-size:14.5px; color:rgba(255,249,200,.65);}
+.premium-card.reveal:nth-child(1) { transition-delay: 0.1s; }
+.premium-card.reveal:nth-child(2) { transition-delay: 0.2s; }
+.premium-card.reveal:nth-child(3) { transition-delay: 0.3s; }
 
 footer.site-footer{ border-top:1px solid rgba(247,234,138,.08); padding:44px 0; text-align:center; }
 footer.site-footer .verse-line{ font-family:'PT Serif',serif; font-style:italic; color:rgba(255,249,200,.6); font-size:13.5px; margin-bottom:10px; }
@@ -127,12 +141,10 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
   <div class="marquee-track">
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
   </div>
@@ -151,36 +163,36 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
     <div class="eyebrow">О школе</div>
     <h1>Школа Мгера Шакаряна</h1>
     <p class="lede">
-      — это очное пятидневное обучение для тех, кто хочет не просто узнать о вере, а прожить путь ученика: от основания до практического служения.
+      — это очное обучение для тех, кто хочет не просто узнать о вере, а прожить путь ученика: от основания до практического служения.
     </p>
   </div>
 </section>
 
 <section class="tight">
   <div class="wrap">
-    <div class="eyebrow">Миссия</div>
-    <h2 class="section-title">Зачем существует школа</h2>
-    <p class="section-lede">
-      Мы верим, что вера взрослеет не от объёма прочитанного, а от того, что прожито и применено. Поэтому программа школы построена как путь из пяти шагов — от личного основания до посланничества в мир — а не как набор разрозненных лекций.
+    <div class="eyebrow reveal">Миссия</div>
+    <h2 class="section-title reveal">Зачем существует школа</h2>
+    <p class="section-lede reveal">
+      Мы верим, что вера взрослеет не от объёма прочитанного, а от того, что прожито и применено. Поэтому программа школы построена как путь — от личного основания до посланничества в мир — а не как набор разрозненных лекций.
     </p>
     <div class="card-grid">
-      <div class="premium-card">
+      <div class="premium-card reveal">
         <div class="num">Путь</div>
         <h5>Служение</h5>
         <p>Годы практического служения в общине, которые легли в основу программы школы.</p>
       </div>
-      <div class="premium-card">
+      <div class="premium-card reveal">
         <div class="num">Опыт</div>
         <h5>Наставничество</h5>
         <p>Опыт личного сопровождения учеников — от первых вопросов до самостоятельного служения.</p>
       </div>
-      <div class="premium-card">
+      <div class="premium-card reveal">
         <div class="num">Цель</div>
         <h5>Передача</h5>
         <p>Желание передать не только знание, но и практику живой веры следующему поколению.</p>
       </div>
     </div>
-    <div class="btn-row" style="justify-content:flex-start; margin-top:30px;">
+    <div class="btn-row reveal" style="justify-content:flex-start; margin-top:30px;">
       <a href="program.html" class="btn">Программа школы</a>
       <a href="contacts.html" class="btn ghost">Задать вопрос</a>
     </div>
@@ -189,11 +201,11 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
 
 <section class="tight">
   <div class="wrap" style="text-align:center;">
-    <div class="eyebrow" style="justify-content:center;">География</div>
-    <h2 class="section-title">Города, где нас уже знают</h2>
-    <p class="section-lede center">Наведите курсор или проведите пальцем по сфере — она плавно повернётся к вам.</p>
+    <div class="eyebrow reveal" style="justify-content:center;">География</div>
+    <h2 class="section-title reveal">Города, где нас уже знают</h2>
+    <p class="section-lede center reveal">Наведите курсор или проведите пальцем по сфере — она плавно повернётся к вам.</p>
   </div>
-  <div class="globe-wrap" id="globeWrap">
+  <div class="globe-wrap reveal" id="globeWrap">
     <div class="globe-core"></div>
     <div class="globe-tags" id="globeTags"></div>
   </div>
@@ -210,7 +222,7 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
 <script>
 (function(){
   var wrap = document.getElementById('globeWrap'); var tagsContainer = document.getElementById('globeTags'); if(!wrap || !tagsContainer) return;
-  var cities = ['Сочи', 'Краснодар', 'Москва', 'Екатеринбург', 'Омск']; var R = 140; /* Чуть увеличил радиус сферы под крупный шрифт */
+  var cities = ['Сочи', 'Краснодар', 'Москва', 'Екатеринбург', 'Омск']; var R = 140; 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; var N = cities.length;
   var points = cities.map(function(name, i){
     var y = N > 1 ? 1 - (i/(N-1))*2 : 0; var radius = Math.sqrt(Math.max(0, 1 - y*y)); var golden = Math.PI * (3 - Math.sqrt(5)); var theta = golden * i;
@@ -244,6 +256,17 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
 </script>
 
 <canvas id="spark-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:9999;"></canvas>
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 <script>
 (function(){
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
