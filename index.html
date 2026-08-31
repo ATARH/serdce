@@ -161,8 +161,7 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 .flip-front .card-video{ position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; }
 .flip-front .front-scrim{ position:absolute; inset:0; z-index:1; background: linear-gradient(180deg, rgba(26,4,0,.15) 0%, rgba(26,4,0,.6) 55%, rgba(26,4,0,.9) 100%); }
 .flip-front .front-content, .flip-front > .hint, .card-tap-btn{ position:relative; z-index:2; }
-.flip-front .day-num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:15px; letter-spacing:.06em;}
-.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:14px 0 8px; line-height:1.15; text-shadow:0 2px 12px rgba(0,0,0,.6);}
+.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:0 0 8px; line-height:1.15; text-shadow:0 2px 12px rgba(0,0,0,.6);}
 .flip-front p{font-size:13.5px; color:rgba(255,249,200,.78); text-shadow:0 1px 8px rgba(0,0,0,.7);}
 .flip-front .hint{display:none;}
 .card-tap-btn{ align-self:flex-start; margin-top:auto; display:inline-flex; align-items:center; gap:6px; padding:7px 16px; border-radius:999px; background:rgba(11,2,0,.6); border:1px solid rgba(247,234,138,.55); color:var(--gold); font-family:'PT Serif',serif; font-weight:700; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; }
@@ -190,22 +189,6 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 .testi-card .name{font-family:'Playfair Display',serif; color:var(--gold); font-size:14.5px;}
 .testi-card .role{font-size:12.5px; color:rgba(255,249,200,.55);}
 @media(max-width:700px){.testi-grid{grid-template-columns:1fr;}}
-
-/* ===== CONTACTS ===== */
-.contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;}
-.contact-list{display:flex; flex-direction:column; gap:22px;}
-.contact-item{ display:flex; gap:16px; align-items:flex-start; background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:20px 22px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
-.contact-item .ico{ width:38px; height:38px; border-radius:50%; flex:none; background:rgba(242,211,94,.12); border:1px solid rgba(242,211,94,.35); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:16px; }
-.contact-item h5{font-family:'Playfair Display',serif; color:var(--gold); font-size:15.5px; margin-bottom:4px;}
-.contact-item p{font-size:14px; color:rgba(255,249,200,.72);}
-.contact-form{ background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:32px 30px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
-.contact-form h4{font-family:'Playfair Display',serif; color:var(--gold); font-size:19px; margin-bottom:6px;}
-.contact-form .sub{font-size:13.5px; color:rgba(255,249,200,.6); margin-bottom:22px;}
-.field{margin-bottom:16px; display:flex; flex-direction:column; gap:6px;}
-.field label{font-size:12.5px; color:var(--amber); font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.04em;}
-.field input,.field textarea{ background:rgba(11,2,0,.5); border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:11px 14px; color:var(--cream); font-family:'PT Serif',serif; font-size:14px; outline:none; resize:vertical; }
-.field input:focus,.field textarea:focus{border-color:rgba(247,234,138,.5);}
-@media(max-width:760px){.contact-grid{grid-template-columns:1fr;}}
 
 /* ===== FOOTER ===== */
 footer.site-footer{ border-top:1px solid rgba(247,234,138,.08); padding:44px 0; text-align:center; }
@@ -235,12 +218,10 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
   <div class="marquee-track">
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
   </div>
@@ -295,8 +276,8 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
 <section class="tight">
   <div class="wrap">
     <div class="eyebrow">Программа</div>
-    <h2 class="section-title">Пять дней школы</h2>
-    <p class="section-lede">Нажмите на карточку, чтобы увидеть, из чего состоит день.</p>
+    <h2 class="section-title">Темы школы</h2>
+    <p class="section-lede">Нажмите на карточку, чтобы увидеть, из чего состоит тема.</p>
   </div>
   <div class="wrap">
     <div class="flip-grid" id="home-preview"></div>
@@ -313,11 +294,11 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
 
 <script>
 window.SCHOOL_DAYS = [
-  { num: "I", title: "Встреча", short: "Первый шаг — вернуться к сердцу Бога и узнать Его адрес.", vid: "day1.mp4", poster: "day1-poster.jpg", points: [ "Вернись к Моему сердцу", "Адрес Бога", "Знакомство и встреча с Богом" ] },
-  { num: "II", title: "Голос Бога", short: "Три служения о том, как слышать и узнавать голос Бога.", vid: "day2.mp4", poster: "day2-poster.jpg", points: [ "Как слышать голос Бога", "Как отличать Его голос от других голосов", "Как подружиться с Богом" ] },
-  { num: "III", title: "Присутствие", short: "Как войти в Божье Присутствие и удержать его.", vid: "day3.mp4", poster: "day3-poster.jpg", points: [ "Как следовать за Богом", "Как входить в Божье Присутствие", "Как удерживать Божье Присутствие" ] },
-  { num: "IV", title: "Святой Дух", short: "Знакомство с Личностью, характером и сердцем Святого Духа.", vid: "day4.mp4", poster: "day4-poster.jpg", points: [ "Святой Дух — Кто Он", "Характер и сердце Святого Духа", "Как углубить отношения со Святым Духом" ] },
-  { num: "V", title: "Святое Святых", short: "Свидание с Богом за пределами внешнего двора.", vid: "day5.mp4", poster: "day5-poster.jpg", points: [ "Свидание с Богом", "Покидая внешний двор", "Святое Святых" ] }
+  { title: "Встреча", short: "Первый шаг — вернуться к сердцу Бога и узнать Его адрес.", vid: "day1.mp4", poster: "day1-poster.jpg", points: [ "Вернись к Моему сердцу", "Адрес Бога", "Знакомство и встреча с Богом" ] },
+  { title: "Голос Бога", short: "Три служения о том, как слышать и узнавать голос Бога.", vid: "day2.mp4", poster: "day2-poster.jpg", points: [ "Как слышать голос Бога", "Как отличать Его голос от других голосов", "Как подружиться с Богом" ] },
+  { title: "Присутствие", short: "Как войти в Божье Присутствие и удержать его.", vid: "day3.mp4", poster: "day3-poster.jpg", points: [ "Как следовать за Богом", "Как входить в Божье Присутствие", "Как удерживать Божье Присутствие" ] },
+  { title: "Святой Дух", short: "Знакомство с Личностью, характером и сердцем Святого Духа.", vid: "day4.mp4", poster: "day4-poster.jpg", points: [ "Святой Дух — Кто Он", "Характер и сердце Святого Духа", "Как углубить отношения со Святым Духом" ] },
+  { title: "Святое Святых", short: "Свидание с Богом за пределами внешнего двора.", vid: "day5.mp4", poster: "day5-poster.jpg", points: [ "Свидание с Богом", "Покидая внешний двор", "Святое Святых" ] }
 ];
 </script>
 <script>
@@ -336,7 +317,6 @@ window.SCHOOL_DAYS = [
             <video class="card-video" muted loop playsinline poster="${day.poster}"></video>
             <div class="front-scrim"></div>
             <div class="front-content">
-              <div class="day-num">День ${day.num}</div>
               <h3>${day.title}</h3>
               <p>${day.short}</p>
             </div>
@@ -350,17 +330,15 @@ window.SCHOOL_DAYS = [
         </div>`;
       card.addEventListener('click', ()=>card.classList.toggle('flipped'));
       preview.appendChild(card);
-      if (window.matchMedia('(min-width:761px)').matches) {
-        const vid = card.querySelector('.card-video');
-        const source = document.createElement('source');
-        source.src = day.vid; source.type = 'video/mp4';
-        vid.appendChild(source); vid.load();
-        const p = vid.play(); if (p && p.catch) p.catch(function(){});
-      }
+      
+      const vid = card.querySelector('.card-video');
+      const source = document.createElement('source');
+      source.src = day.vid; source.type = 'video/mp4';
+      vid.appendChild(source); vid.load();
+      const p = vid.play(); if (p && p.catch) p.catch(function(){});
     });
   }
   
-  // Скрипт для всплытия элементов
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
