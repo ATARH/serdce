@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0B0200">
-<title>Обо мне — Школа Мгера Шакаряна</title>
+<title>Программа — Школа Мгера Шакаряна</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0B0200;
-  --ember:#2B0401; /* Темно-бордовый */
-  --maroon:#1A0400; /* Темно-бордовый для карточек */
+  --ember:#2B0401;
+  --maroon:#1A0400;
   --amber:#F2D35E;
   --gold:#F7EA8A;
   --cream:#FFF9C8;
@@ -20,237 +20,25 @@
 
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth; max-width:100%; overflow-x:hidden;}
-body{ 
-  background:var(--ink); color:var(--cream); font-family:'PT Serif', Georgia, serif; 
-  line-height:1.65; -webkit-font-smoothing:antialiased; min-height:100vh; 
-  max-width:100%; overflow-x:hidden; /* Запрещаем прокрутку вбок */
+body{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'PT Serif', Georgia, serif;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  max-width:100%;
+  overflow-x:hidden;
 }
-a, button, .flip-card, .btn, .premium-card, .status-pill{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
-@media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;} }
-body::before{ content:""; position:fixed; inset:0; z-index:-2; background: radial-gradient(ellipse 90% 55% at 50% 100%, rgba(43,4,1,.5), transparent 70%), radial-gradient(ellipse 70% 40% at 15% 0%, rgba(26,4,0,.32), transparent 70%), var(--ink); }
-body::after{ content:""; position:fixed; inset:0; z-index:-1; opacity:.45; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255,255,255,.009) 0 1px, transparent 1px 4px); }
-
-h1,h2,h3,.serif-display{font-family:'Playfair Display','PT Serif',serif;}
-a{color:inherit;}
-.wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
-section{padding:100px 0;} section.tight{padding:70px 0;} section + section{border-top:1px solid rgba(247,234,138,.08);}
-
-/* Эффект всплытия при скролле */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out, border-color 0.25s ease;
+a, button, .flip-card, .btn, .premium-card, .status-pill{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
 }
-
-/* ===== NAV ===== */
-header.site-header{ position:sticky; top:0; z-index:50; background:rgba(11,2,0,.35); backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%); border-bottom:1px solid rgba(247,234,138,.1); }
-header.site-header.over-video{ background:rgba(11,2,0,.55); }
-.nav-inner{ max-width:1120px; margin:0 auto; padding:0 40px; height:76px; display:flex; align-items:center; justify-content:space-between; }
-.logo{ font-family:'Playfair Display',serif; font-weight:700; font-size:19px; color:var(--gold); text-decoration:none; letter-spacing:.01em; line-height:1.2; }
-.logo small{display:block; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11.5px; color:var(--amber); letter-spacing:.08em; font-weight:400; margin-top:2px;}
-nav.menu{display:flex; gap:30px;}
-nav.menu a{ font-size:14px; text-decoration:none; color:rgba(255,249,200,.78); position:relative; padding:6px 0; transition:color .2s; }
-nav.menu a:hover{color:var(--gold);} nav.menu a.active{color:var(--gold);}
-nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom:-2px; height:1px; background:var(--amber); }
-.nav-toggle{display:none; background:none; border:none; color:var(--gold); font-size:22px; cursor:pointer; padding:10px; line-height:1;}
-.nav-toggle:active{transform:scale(.9);}
-
-/* ===== БЕГУЩАЯ СТРОКА ===== */
-.marquee{ overflow:hidden; background:transparent; padding:12px 0; }
-.marquee-track{ display:flex; align-items:center; width:max-content; animation:marquee-scroll 28s linear infinite; will-change:transform; }
-.marquee:hover .marquee-track{animation-play-state:paused;}
-.marquee-track span{ font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.1em; text-transform:uppercase; font-size:13.5px; color:var(--gold); white-space:nowrap; display:flex; align-items:center; gap:34px; padding-right:34px; }
-.marquee-track span::after{content:"✦"; color:var(--amber); font-style:normal;}
-@keyframes marquee-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
-@media (prefers-reduced-motion:reduce){ .marquee-track{animation-play-state:paused;} }
-
-@media(max-width:760px){
-  .nav-inner{padding:0 22px;}
-  header.site-header{ backdrop-filter:blur(10px) saturate(140%); -webkit-backdrop-filter:blur(10px) saturate(140%); }
-  nav.menu{ position:fixed; top:76px; left:0; right:0; z-index:49; flex-direction:column; gap:0; background:rgba(11,2,0,.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(247,234,138,.12); transform:translateY(-10px); opacity:0; pointer-events:none; transition:transform .22s cubic-bezier(.3,.7,.4,1), opacity .18s ease; will-change:transform, opacity; }
-  nav.menu.open{transform:translateY(0); opacity:1; pointer-events:auto;}
-  nav.menu a{padding:16px 22px; border-top:1px solid rgba(255,255,255,.06); display:block;}
-  nav.menu a:active{background:rgba(247,234,138,.06);}
-  .nav-toggle{display:block;} body::after{opacity:.28;}
-}
-
-/* ===== HERO ===== */
-.page-hero{padding:90px 0 70px; text-align:center; position:relative;}
-.eyebrow{ font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.16em; text-transform:uppercase; color:var(--amber); font-size:14px; margin-bottom:18px; display:flex; align-items:center; justify-content:center; gap:12px; }
-.eyebrow::before,.eyebrow::after{content:""; width:28px; height:1px; background:var(--amber); opacity:.6;}
-.page-hero h1{ font-size:clamp(34px,5.5vw,58px); font-weight:800; color:var(--gold); line-height:1.08; margin-bottom:20px; }
-.page-hero .lede{ max-width:620px; margin:0 auto; color:rgba(255,249,200,.75); font-size:17px; }
-.section-title{font-size:clamp(28px,4vw,40px); font-weight:700; color:var(--gold); margin-bottom:14px;}
-.section-lede{max-width:640px; color:rgba(255,249,200,.72); font-size:16.5px; margin-bottom:50px;}
-
-/* ===== BUTTONS ===== */
-@keyframes btn-ember{ 0%,100%{ box-shadow:0 10px 26px rgba(242,211,94,.28), 0 0 14px rgba(242,211,94,.35), 0 0 2px rgba(255,247,214,.6); } 50%{ box-shadow:0 10px 32px rgba(242,211,94,.5), 0 0 30px rgba(242,211,94,.7), 0 0 6px rgba(255,247,214,.85); } }
-@keyframes btn-ember-ghost{ 0%,100%{ box-shadow:0 0 0 rgba(242,211,94,0); border-color:rgba(247,234,138,.4); } 50%{ box-shadow:0 0 20px rgba(242,211,94,.4); border-color:rgba(247,234,138,.85); } }
-.btn{ display:inline-block; padding:13px 28px; border-radius:999px; background:linear-gradient(180deg, var(--gold), var(--amber)); color:#2a1000; font-weight:700; font-size:14px; text-decoration:none; font-family:'PT Serif',serif; box-shadow:0 10px 26px rgba(242,211,94,.25); border:none; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; animation:btn-ember 2.6s ease-in-out infinite; }
-.btn:active{transform:scale(.96); box-shadow:0 4px 14px rgba(242,211,94,.2);}
-.btn.ghost{ background:transparent; color:var(--gold); border:1px solid rgba(247,234,138,.4); box-shadow:none; animation:btn-ember-ghost 2.6s ease-in-out infinite; }
-.btn.ghost:active{transform:scale(.96); background:rgba(247,234,138,.06);}
-.btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
-
-/* ===== БЛОК "ОБО МНЕ" (фото + текст) ===== */
-.founder-grid{ display:grid; grid-template-columns:340px 1fr; gap:48px; align-items:start; }
-.founder-photo{ position:relative; }
-.founder-photo-inner{ aspect-ratio:3/4; border-radius:18px; overflow:hidden; border:1px solid rgba(247,234,138,.2); box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06); }
-.founder-photo-inner img{ width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block; }
-.founder-bio h2{ margin-bottom:24px; }
-.founder-bio p{ margin-bottom:20px; max-width:100%; font-size:16.5px; color:rgba(255,249,200,.72); }
-.founder-bio .eyebrow { justify-content: flex-start; }
-
-/* На телефонах ставим фото СВЕРХУ, текст СНИЗУ */
-@media(max-width:760px){
-  .founder-grid{ display:flex; flex-direction:column; align-items:center; }
-  .founder-photo{ width:100%; max-width:320px; margin-bottom:32px; }
-  .founder-bio{ width:100%; } 
-}
-
-/* ===== FOOTER ===== */
-footer.site-footer{ border-top:1px solid rgba(247,234,138,.08); padding:44px 0; text-align:center; }
-footer.site-footer .verse-line{ font-family:'PT Serif',serif; font-style:italic; color:rgba(255,249,200,.6); font-size:13.5px; margin-bottom:10px; }
-footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.08em; text-transform:uppercase; font-size:11.5px; color:rgba(247,234,138,.4); }
-
-@media(max-width:760px){ section{padding:64px 0;} .wrap{padding:0 22px;} }
-</style>
-</head>
-<body>
-
-<header class="site-header">
-  <div class="nav-inner">
-    <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
-    <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
-    <nav class="menu">
-      <a href="index.html">Главная</a>
-      <a href="about.html">О школе</a>
-      <a href="founder.html" class="active">Обо мне</a>
-      <a href="program.html">Программа</a>
-      <a href="reviews.html">Отзывы</a>
-      <a href="contacts.html">Контакты</a>
-    </nav>
-  </div>
-</header>
-<div class="marquee">
-  <div class="marquee-track">
-    <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
-    <span>Школа Мгера Шакаряна</span>
-    <span>Идёт набор на ближайший поток</span>
-    <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
-    <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
-    <span>Школа Мгера Шакаряна</span>
-    <span>Идёт набор на ближайший поток</span>
-    <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
-  </div>
-</div>
-
-<section class="page-hero">
-  <div class="wrap">
-    <div class="eyebrow">Обо мне</div>
-    <h1>Мгер Шакарян</h1>
-    <p class="lede">
-      Пастор церкви «Сердце Бога» · Основатель школы «Сердце Бога»
-    </p>
-  </div>
-</section>
-
-<section class="tight">
-  <div class="wrap founder-grid">
-
-    <div class="founder-photo reveal">
-      <div class="founder-photo-inner">
-        <img src="founder-photo.jpg" alt="Мгер Шакарян">
-      </div>
-    </div>
-
-    <div class="founder-bio reveal" style="transition-delay: 0.2s;">
-      <div class="eyebrow">Биография</div>
-      <h2 class="section-title">Познание сердца Бога</h2>
-      <p>Мгер Шакарян — пастор церкви «Сердце Бога» и основатель одноимённой школы. Однажды Бог проговорил в его сердце и открыл новое направление — «познание сердца Бога». Сейчас он живёт реальными целями: показать людям, как дышит Бог, о чём думает Бог, о чём мечтает Бог.</p>
-      <p>Из этого откровения родилась школа «Сердце Бога» — не курс лекций, а живой путь длиной в пять дней, где каждый может лично встретиться с Богом, научиться слышать Его голос и оставаться в Его Присутствии.</p>
-      <p style="margin-bottom:0;">Сегодня Мгер продолжает вкладываться в учеников — не только передавая знание, но сопровождая каждого на пути от первой встречи с Богом до собственного служения. Его цель — чтобы школа выросла в живое движение людей, которые несут открытое ими сердце Бога дальше: в свои семьи, города и служения.</p>
-      <div class="btn-row" style="justify-content:flex-start; margin-top:32px;">
-        <a href="program.html" class="btn">Программа школы</a>
-        <a href="contacts.html" class="btn ghost">Связаться</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="tight">
-  <div class="wrap">
-    <div class="eyebrow reveal">Миссия</div>
-    <h2 class="section-title reveal">Зачем существует школа</h2>
-    <p class="section-lede reveal">
-      Мы верим, что вера взрослеет не от объёма прочитанного, а от того, что прожито и применено. Поэтому программа школы построена как путь из пяти шагов — от личного основания до посланничества в мир — а не как набор разрозненных лекций.
-    </p>
-    <div class="btn-row reveal" style="justify-content:flex-start;">
-      <a href="about.html" class="btn ghost">О школе</a>
-      <a href="contacts.html" class="btn ghost">Задать вопрос</a>
-    </div>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>
-  <div class="meta">Школа Мгера Шакаряна · {{YEAR}}</div>
-</footer>
-
-<script>
-  document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
-</script>
-
-<canvas id="spark-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:9999;"></canvas>
-<script>
-  // Скрипт для всплытия элементов (фотографии и текста)
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-
-<script>
-(function(){
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var canvas = document.getElementById('spark-canvas'); var ctx = canvas.getContext('2d');
-  function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize); var particles = []; var lastSpawn = 0;
-
-  function spawn(x, y){
-    var now = performance.now(); if (now - lastSpawn < 16) return; lastSpawn = now;
-    for (var i=0;i<2;i++){ particles.push({ x:x, y:y, vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.9)*0.6, life:1, size:1.5+Math.random()*2, color: Math.random() > 0.5 ? '247,234,138' : '242,211,94' }); }
-    if (particles.length > 120) particles.splice(0, particles.length-120);
-  }
-
-  // Для компьютера (мышь)
-  window.addEventListener('mousemove', function(e){ spawn(e.clientX, e.clientY); });
-  
-  // Для телефонов (палец)
-  window.addEventListener('touchmove', function(e){ if(e.touches[0]) spawn(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
-  window.addEventListener('touchstart', function(e){ if(e.touches[0]) spawn(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
-
-  function tick(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for (var i=particles.length-1;i>=0;i--){
-      var p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.01; p.life -= 0.018;
-      if (p.life <= 0){ particles.splice(i,1); continue; }
-      ctx.beginPath(); ctx.fillStyle = 'rgba('+p.color+','+p.life+')'; ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2); ctx.fill();
-    }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-</script>
-</body>
-</html>
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 100%,
