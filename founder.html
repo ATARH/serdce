@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0B0200">
-<title>Контакты — Школа Мгера Шакаряна</title>
+<title>Обо мне — Школа Мгера Шакаряна</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
@@ -395,17 +395,17 @@ footer.site-footer .meta{
 </head>
 <body>
 
-<header class="site-header over-video">
+<header class="site-header">
   <div class="nav-inner">
     <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
     <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
     <nav class="menu">
       <a href="index.html">Главная</a>
       <a href="about.html">О школе</a>
-      <a href="founder.html">Обо мне</a>
+      <a href="founder.html" class="active">Обо мне</a>
       <a href="program.html">Программа</a>
       <a href="reviews.html">Отзывы</a>
-      <a href="contacts.html" class="active">Контакты</a>
+      <a href="contacts.html">Контакты</a>
     </nav>
   </div>
 </header>
@@ -425,119 +425,72 @@ footer.site-footer .meta{
 </div>
 
 
-<section class="page-hero has-video">
-  <video class="video-bg" id="pageHeroVideo" muted loop playsinline poster="contacts-poster.jpg"></video>
-  <script>
-  (function(){
-    if (window.matchMedia('(min-width:761px)').matches) {
-      var v = document.getElementById('pageHeroVideo');
-      var s = document.createElement('source');
-      s.src = 'contacts.mp4'; s.type = 'video/mp4';
-      v.appendChild(s); v.load();
-      var p = v.play(); if (p && p.catch) p.catch(function(){});
-    }
-  })();
-  </script>
-  <div class="video-scrim"></div>
+<section class="page-hero">
   <div class="wrap">
-    <div class="eyebrow">Контакты</div>
-    <h1>Будем рады<br>ответить</h1>
-    <p class="lede">Телефон, Telegram или форма ниже — как вам удобнее.</p>
+    <div class="eyebrow">Обо мне</div>
+    <h1>Мгер Шакарян</h1>
+    <p class="lede">
+      Пастор церкви «Сердце Бога» · Основатель школы «Сердце Бога»
+    </p>
   </div>
 </section>
 
 <section class="tight">
-  <div class="wrap contact-grid">
+  <div class="wrap" style="display:grid; grid-template-columns:340px 1fr; gap:48px; align-items:start;">
 
-    <div class="contact-list">
-      <div class="contact-item">
-        <div class="ico">✆</div>
-        <div>
-          <h5>Телефон</h5>
-          <p>+7 928 446-40-44</p>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="ico">✉</div>
-        <div>
-          <h5>Email</h5>
-          <p>info@school-example.org</p>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="ico">⌂</div>
-        <div>
-          <h5>Город и адрес проведения</h5>
-          <p>Укажите город и адрес встреч школы</p>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="ico">✦</div>
-        <div>
-          <h5>Telegram</h5>
-          <p>@ShakaryanMger</p>
-        </div>
+    <div style="position:relative;">
+      <div style="aspect-ratio:3/4; border-radius:18px; overflow:hidden; border:1px solid rgba(247,234,138,.2); box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);">
+        <img src="founder-photo.jpg" alt="Мгер Шакарян" style="width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block;">
       </div>
     </div>
 
-    <form class="contact-form" id="contactForm">
-      <h4>Оставить заявку</h4>
-      <p class="sub">Расскажите немного о себе — сообщение придёт напрямую Мгеру в Telegram.</p>
-      <div class="field">
-        <label for="name">Имя</label>
-        <input id="name" type="text" placeholder="Ваше имя" required>
-      </div>
-      <div class="field">
-        <label for="contact">Телефон или email</label>
-        <input id="contact" type="text" placeholder="Как с вами связаться" required>
-      </div>
-      <div class="field">
-        <label for="msg">Сообщение</label>
-        <textarea id="msg" rows="4" placeholder="Ваш вопрос или комментарий"></textarea>
-      </div>
-      <button class="btn" type="submit" style="width:100%;">Отправить</button>
-      <p class="sent" style="display:none; margin-top:14px; font-size:13.5px; color:var(--gold); text-align:center;">
-        Спасибо! Сообщение отправлено — Мгер свяжется с вами.
+    <div>
+      <div class="eyebrow">Биография</div>
+      <h2 class="section-title" style="margin-bottom:24px;">Познание сердца Бога</h2>
+      <p class="section-lede" style="margin-bottom:20px; max-width:100%;">
+        Мгер Шакарян — пастор церкви «Сердце Бога» и основатель одноимённой
+        школы. Однажды Бог проговорил в его сердце и открыл новое
+        направление — «познание сердца Бога». Сейчас он живёт реальными
+        целями: показать людям, как дышит Бог, о чём думает Бог, о чём
+        мечтает Бог.
       </p>
-    </form>
+      <p class="section-lede" style="margin-bottom:20px; max-width:100%;">
+        Из этого откровения родилась школа «Сердце Бога» — не курс лекций,
+        а живой путь длиной в пять дней, где каждый может лично встретиться
+        с Богом, научиться слышать Его голос и оставаться в Его Присутствии.
+      </p>
+      <p class="section-lede" style="margin-bottom:0; max-width:100%;">
+        Сегодня Мгер продолжает вкладываться в учеников — не только передавая
+        знание, но сопровождая каждого на пути от первой встречи с Богом до
+        собственного служения. Его цель — чтобы школа выросла в живое
+        движение людей, которые несут открытое ими сердце Бога дальше:
+        в свои семьи, города и служения.
+      </p>
+      <div class="btn-row" style="justify-content:flex-start; margin-top:32px;">
+        <a href="program.html" class="btn">Программа школы</a>
+        <a href="contacts.html" class="btn ghost">Связаться</a>
+      </div>
+    </div>
 
   </div>
 </section>
 
-<script>
-  // Отправка заявки в Telegram через Bot API — без видимого перехода в Telegram,
-  // пользователь остаётся на сайте и просто видит "Спасибо".
-  //
-  // ЧТОБЫ ЗАРАБОТАЛО ПО-НАСТОЯЩЕМУ, нужно:
-  // 1) Написать @BotFather в Telegram → /newbot → получить BOT_TOKEN.
-  // 2) Написать этому боту любое сообщение, затем открыть в браузере
-  //    https://api.telegram.org/bot<ВАШ_ТОКЕН>/getUpdates и найти свой "chat":"id" — это CHAT_ID.
-  // 3) Вписать оба значения ниже вместо заглушек.
-  var TELEGRAM_BOT_TOKEN = '8978283483:AAGi8Aju5xswermvdhJ9uJtsJ2XzIAgyLaw';
-  var TELEGRAM_CHAT_ID   = '5045502979';
-
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    var form = e.target;
-    var name = form.querySelector('#name').value;
-    var contact = form.querySelector('#contact').value;
-    var msg = form.querySelector('#msg').value;
-    var text = 'Заявка с сайта школы:\\nИмя: ' + name + '\\nСвязь: ' + contact + '\\nСообщение: ' + (msg || '—');
-
-    if (TELEGRAM_BOT_TOKEN !== 'ВАШ_BOT_TOKEN') {
-      fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text })
-      }).catch(function(){ /* тихо игнорируем сбой — пользователь всё равно увидит "Спасибо" */ });
-    }
-    // Сообщение считается отправленным для пользователя в любом случае —
-    // если Telegram недоступен, человек всё равно получил обратную связь,
-    // а вы всегда можете написать в мессенджер по указанному контакту.
-    form.querySelector('.sent').style.display = 'block';
-    form.reset();
-  });
-</script>
+<section class="tight">
+  <div class="wrap">
+    <div class="eyebrow">Миссия</div>
+    <h2 class="section-title">Зачем существует школа</h2>
+    <p class="section-lede">
+      Мы верим, что вера взрослеет не от объёма прочитанного, а от того,
+      что прожито и применено. Поэтому программа школы построена как путь
+      из пяти шагов — от личного основания до посланничества в мир —
+      а не как набор разрозненных лекций.
+    </p>
+    <div class="btn-row" style="justify-content:flex-start;">
+      <a href="about.html" class="btn ghost">О школе</a>
+      <a href="contacts.html" class="btn ghost">Задать вопрос</a>
+    </div>
+  </div>
+</section>
 
 <footer class="site-footer">
   <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>

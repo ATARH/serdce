@@ -101,8 +101,7 @@ nav.menu a.active::after{
 /* ===== БЕГУЩАЯ СТРОКА ===== */
 .marquee{
   overflow:hidden;
-  background:var(--maroon);
-  border-bottom:1px solid rgba(247,234,138,.12);
+  background:transparent;
   padding:12px 0;
 }
 .marquee-track{
@@ -190,6 +189,31 @@ nav.menu a.active::after{
 
 /* центрированная секция-заголовок */
 .section-title{font-size:clamp(28px,4vw,40px); font-weight:700; color:var(--gold); margin-bottom:14px;}
+
+/* ===== ВРАЩАЮЩАЯСЯ СФЕРА ГОРОДОВ ===== */
+.globe-wrap{
+  position:relative; width:320px; height:320px; margin:50px auto 10px;
+  cursor:grab; touch-action:pan-y;
+}
+.globe-core{
+  position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, rgba(242,211,94,.22), rgba(78,14,2,.12) 55%, transparent 78%);
+  border:1px solid rgba(247,234,138,.18);
+  box-shadow:inset 0 0 50px rgba(242,211,94,.1), 0 0 70px rgba(242,211,94,.08);
+}
+.globe-core::before{
+  content:"";
+  position:absolute; inset:18px; border-radius:50%;
+  border:1px solid rgba(247,234,138,.1);
+}
+.globe-tags{ position:absolute; inset:0; }
+.globe-tag{
+  position:absolute; left:50%; top:50%;
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  color:var(--gold); font-size:15px; white-space:nowrap;
+  pointer-events:none; text-shadow:0 0 10px rgba(242,211,94,.5);
+  will-change:transform, opacity;
+}
 .section-lede{max-width:640px; color:rgba(255,249,200,.72); font-size:16.5px; margin-bottom:50px;}
 .center{text-align:center; margin-left:auto; margin-right:auto;}
 
@@ -227,6 +251,14 @@ nav.menu a.active::after{
 .home-hero .verse cite{display:block; margin-top:10px; font-style:normal; color:var(--amber); font-size:13px; letter-spacing:.05em;}
 
 /* ===== BUTTONS ===== */
+@keyframes btn-ember{
+  0%,100%{ box-shadow:0 10px 26px rgba(242,211,94,.28), 0 0 14px rgba(242,211,94,.35), 0 0 2px rgba(255,247,214,.6); }
+  50%{ box-shadow:0 10px 32px rgba(242,211,94,.5), 0 0 30px rgba(242,211,94,.7), 0 0 6px rgba(255,247,214,.85); }
+}
+@keyframes btn-ember-ghost{
+  0%,100%{ box-shadow:0 0 0 rgba(242,211,94,0); border-color:rgba(247,234,138,.4); }
+  50%{ box-shadow:0 0 20px rgba(242,211,94,.4); border-color:rgba(247,234,138,.85); }
+}
 .btn{
   display:inline-block; padding:13px 28px; border-radius:999px;
   background:linear-gradient(180deg, var(--gold), var(--amber));
@@ -235,11 +267,13 @@ nav.menu a.active::after{
   box-shadow:0 10px 26px rgba(242,211,94,.25);
   border:none; cursor:pointer;
   transition:transform .15s ease, box-shadow .15s ease;
+  animation:btn-ember 2.6s ease-in-out infinite;
 }
 .btn:active{transform:scale(.96); box-shadow:0 4px 14px rgba(242,211,94,.2);}
 .btn.ghost{
   background:transparent; color:var(--gold);
   border:1px solid rgba(247,234,138,.4); box-shadow:none;
+  animation:btn-ember-ghost 2.6s ease-in-out infinite;
 }
 .btn.ghost:active{transform:scale(.96); background:rgba(247,234,138,.06);}
 .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
@@ -393,6 +427,7 @@ footer.site-footer .meta{
     <nav class="menu">
       <a href="index.html">Главная</a>
       <a href="about.html" class="active">О школе</a>
+      <a href="founder.html">Обо мне</a>
       <a href="program.html">Программа</a>
       <a href="reviews.html">Отзывы</a>
       <a href="contacts.html">Контакты</a>
@@ -416,9 +451,18 @@ footer.site-footer .meta{
 
 
 <section class="page-hero has-video">
-  <video class="video-bg" autoplay muted loop playsinline poster="about-poster.jpg">
-    <source src="about.mp4" type="video/mp4">
-  </video>
+  <video class="video-bg" id="pageHeroVideo" muted loop playsinline poster="about-poster.jpg"></video>
+  <script>
+  (function(){
+    if (window.matchMedia('(min-width:761px)').matches) {
+      var v = document.getElementById('pageHeroVideo');
+      var s = document.createElement('source');
+      s.src = 'about.mp4'; s.type = 'video/mp4';
+      v.appendChild(s); v.load();
+      var p = v.play(); if (p && p.catch) p.catch(function(){});
+    }
+  })();
+  </script>
   <div class="video-scrim"></div>
   <div class="wrap">
     <div class="eyebrow">О школе</div>
@@ -478,6 +522,18 @@ footer.site-footer .meta{
   </div>
 </section>
 
+<section class="tight">
+  <div class="wrap" style="text-align:center;">
+    <div class="eyebrow" style="justify-content:center;">География</div>
+    <h2 class="section-title">Города, где нас уже знают</h2>
+    <p class="section-lede center">Наведите курсор или проведите пальцем по сфере — она плавно повернётся к вам.</p>
+  </div>
+  <div class="globe-wrap" id="globeWrap">
+    <div class="globe-core"></div>
+    <div class="globe-tags" id="globeTags"></div>
+  </div>
+</section>
+
 <footer class="site-footer">
   <div class="verse-line">«Взыщете Меня всем сердцем вашим» — Иеремии 29:13</div>
   <div class="meta">Школа Мгера Шакаряна · {{YEAR}}</div>
@@ -485,6 +541,123 @@ footer.site-footer .meta{
 
 <script>
   document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+</script>
+
+<script>
+// ===== ВРАЩАЮЩАЯСЯ СФЕРА ГОРОДОВ =====
+// Чтобы добавить город — просто впишите название в массив ниже.
+(function(){
+  var wrap = document.getElementById('globeWrap');
+  var tagsContainer = document.getElementById('globeTags');
+  if(!wrap || !tagsContainer) return;
+
+  var cities = ['Сочи', 'Краснодар', 'Москва', 'Екатеринбург', 'Омск'];
+  var R = 130;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var N = cities.length;
+
+  var points = cities.map(function(name, i){
+    var y = N > 1 ? 1 - (i/(N-1))*2 : 0;
+    var radius = Math.sqrt(Math.max(0, 1 - y*y));
+    var golden = Math.PI * (3 - Math.sqrt(5));
+    var theta = golden * i;
+    var x = Math.cos(theta) * radius;
+    var z = Math.sin(theta) * radius;
+    var el = document.createElement('span');
+    el.className = 'globe-tag';
+    el.textContent = name;
+    tagsContainer.appendChild(el);
+    return { x:x, y:y, z:z, el:el };
+  });
+
+  var angleY = 0.4, angleX = 0.15;
+  var targetTiltX = 0, targetTiltY = 0;
+  var curTiltX = 0, curTiltY = 0;
+
+  function onMove(clientX, clientY){
+    var rect = wrap.getBoundingClientRect();
+    var nx = (clientX - rect.left - rect.width/2) / (rect.width/2);
+    var ny = (clientY - rect.top - rect.height/2) / (rect.height/2);
+    targetTiltY = nx * 0.9;
+    targetTiltX = -ny * 0.6;
+  }
+  wrap.addEventListener('mousemove', function(e){ onMove(e.clientX, e.clientY); });
+  wrap.addEventListener('mouseleave', function(){ targetTiltX = 0; targetTiltY = 0; });
+  wrap.addEventListener('touchmove', function(e){
+    if (e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY);
+  }, {passive:true});
+  wrap.addEventListener('touchend', function(){ targetTiltX = 0; targetTiltY = 0; });
+
+  function render(){
+    curTiltX += (targetTiltX - curTiltX) * 0.06;
+    curTiltY += (targetTiltY - curTiltY) * 0.06;
+    if (!reduced) angleY += 0.0026;
+    var ay = angleY + curTiltY, ax = angleX + curTiltX;
+    var cosY = Math.cos(ay), sinY = Math.sin(ay);
+    var cosX = Math.cos(ax), sinX = Math.sin(ax);
+
+    points.forEach(function(p){
+      var x1 = p.x*cosY - p.z*sinY;
+      var z1 = p.x*sinY + p.z*cosY;
+      var y2 = p.y*cosX - z1*sinX;
+      var z2 = p.y*sinX + z1*cosX;
+      var x2 = x1;
+
+      var scale = Math.max(0.45, Math.min(1, 0.45 + ((z2+1.4)/2.4)*0.55));
+      var opacity = Math.max(.35, Math.min(1, (z2+1.3)/2));
+      var sx = x2 * R, sy = y2 * R;
+      p.el.style.transform = 'translate(-50%,-50%) translate3d(' + sx.toFixed(1) + 'px,' + sy.toFixed(1) + 'px,0) scale(' + scale.toFixed(3) + ')';
+      p.el.style.opacity = opacity.toFixed(2);
+      p.el.style.zIndex = Math.round((z2+1.5)*100);
+    });
+
+    requestAnimationFrame(render);
+  }
+  render();
+})();
+</script>
+
+<canvas id="spark-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:9999;"></canvas>
+<script>
+(function(){
+  if (!window.matchMedia('(hover:hover)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var canvas = document.getElementById('spark-canvas');
+  var ctx = canvas.getContext('2d');
+  function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var particles = [];
+  var lastSpawn = 0;
+  window.addEventListener('mousemove', function(e){
+    var now = performance.now();
+    if (now - lastSpawn < 30) return;
+    lastSpawn = now;
+    for (var i=0;i<2;i++){
+      particles.push({
+        x:e.clientX, y:e.clientY,
+        vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.9)*0.6,
+        life:1, size:1.5+Math.random()*2,
+        color: Math.random() > 0.5 ? '247,234,138' : '242,211,94'
+      });
+    }
+    if (particles.length > 120) particles.splice(0, particles.length-120);
+  });
+  function tick(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for (var i=particles.length-1;i>=0;i--){
+      var p = particles[i];
+      p.x += p.vx; p.y += p.vy; p.vy += 0.01; p.life -= 0.018;
+      if (p.life <= 0){ particles.splice(i,1); continue; }
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba('+p.color+','+p.life+')';
+      ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
 </script>
 </body>
 </html>

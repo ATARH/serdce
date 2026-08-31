@@ -101,8 +101,7 @@ nav.menu a.active::after{
 /* ===== БЕГУЩАЯ СТРОКА ===== */
 .marquee{
   overflow:hidden;
-  background:var(--maroon);
-  border-bottom:1px solid rgba(247,234,138,.12);
+  background:transparent;
   padding:12px 0;
 }
 .marquee-track{
@@ -227,6 +226,14 @@ nav.menu a.active::after{
 .home-hero .verse cite{display:block; margin-top:10px; font-style:normal; color:var(--amber); font-size:13px; letter-spacing:.05em;}
 
 /* ===== BUTTONS ===== */
+@keyframes btn-ember{
+  0%,100%{ box-shadow:0 10px 26px rgba(242,211,94,.28), 0 0 14px rgba(242,211,94,.35), 0 0 2px rgba(255,247,214,.6); }
+  50%{ box-shadow:0 10px 32px rgba(242,211,94,.5), 0 0 30px rgba(242,211,94,.7), 0 0 6px rgba(255,247,214,.85); }
+}
+@keyframes btn-ember-ghost{
+  0%,100%{ box-shadow:0 0 0 rgba(242,211,94,0); border-color:rgba(247,234,138,.4); }
+  50%{ box-shadow:0 0 20px rgba(242,211,94,.4); border-color:rgba(247,234,138,.85); }
+}
 .btn{
   display:inline-block; padding:13px 28px; border-radius:999px;
   background:linear-gradient(180deg, var(--gold), var(--amber));
@@ -235,11 +242,13 @@ nav.menu a.active::after{
   box-shadow:0 10px 26px rgba(242,211,94,.25);
   border:none; cursor:pointer;
   transition:transform .15s ease, box-shadow .15s ease;
+  animation:btn-ember 2.6s ease-in-out infinite;
 }
 .btn:active{transform:scale(.96); box-shadow:0 4px 14px rgba(242,211,94,.2);}
 .btn.ghost{
   background:transparent; color:var(--gold);
   border:1px solid rgba(247,234,138,.4); box-shadow:none;
+  animation:btn-ember-ghost 2.6s ease-in-out infinite;
 }
 .btn.ghost:active{transform:scale(.96); background:rgba(247,234,138,.06);}
 .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
@@ -393,6 +402,7 @@ footer.site-footer .meta{
     <nav class="menu">
       <a href="index.html">Главная</a>
       <a href="about.html">О школе</a>
+      <a href="founder.html">Обо мне</a>
       <a href="program.html">Программа</a>
       <a href="reviews.html" class="active">Отзывы</a>
       <a href="contacts.html">Контакты</a>
@@ -416,9 +426,18 @@ footer.site-footer .meta{
 
 
 <section class="page-hero has-video">
-  <video class="video-bg" autoplay muted loop playsinline poster="reviews-poster.jpg">
-    <source src="reviews.mp4" type="video/mp4">
-  </video>
+  <video class="video-bg" id="pageHeroVideo" muted loop playsinline poster="reviews-poster.jpg"></video>
+  <script>
+  (function(){
+    if (window.matchMedia('(min-width:761px)').matches) {
+      var v = document.getElementById('pageHeroVideo');
+      var s = document.createElement('source');
+      s.src = 'reviews.mp4'; s.type = 'video/mp4';
+      v.appendChild(s); v.load();
+      var p = v.play(); if (p && p.catch) p.catch(function(){});
+    }
+  })();
+  </script>
   <div class="video-scrim"></div>
   <div class="wrap">
     <div class="eyebrow">Отзывы</div>
@@ -501,6 +520,49 @@ footer.site-footer .meta{
 
 <script>
   document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+</script>
+
+<canvas id="spark-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:9999;"></canvas>
+<script>
+(function(){
+  if (!window.matchMedia('(hover:hover)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var canvas = document.getElementById('spark-canvas');
+  var ctx = canvas.getContext('2d');
+  function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var particles = [];
+  var lastSpawn = 0;
+  window.addEventListener('mousemove', function(e){
+    var now = performance.now();
+    if (now - lastSpawn < 30) return;
+    lastSpawn = now;
+    for (var i=0;i<2;i++){
+      particles.push({
+        x:e.clientX, y:e.clientY,
+        vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.9)*0.6,
+        life:1, size:1.5+Math.random()*2,
+        color: Math.random() > 0.5 ? '247,234,138' : '242,211,94'
+      });
+    }
+    if (particles.length > 120) particles.splice(0, particles.length-120);
+  });
+  function tick(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for (var i=particles.length-1;i>=0;i--){
+      var p = particles[i];
+      p.x += p.vx; p.y += p.vy; p.vy += 0.01; p.life -= 0.018;
+      if (p.life <= 0){ particles.splice(i,1); continue; }
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba('+p.color+','+p.life+')';
+      ctx.arc(p.x, p.y, p.size*p.life, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
 </script>
 </body>
 </html>
