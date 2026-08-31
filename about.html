@@ -65,7 +65,7 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 @media(max-width:760px){
   .nav-inner{padding:0 22px;}
   header.site-header{ backdrop-filter:blur(10px) saturate(140%); -webkit-backdrop-filter:blur(10px) saturate(140%); }
-  nav.menu{ position:fixed; top:76px; left:0; right:0; z-index:49; flex-direction:column; gap:0; background:rgba(11,2,0,.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(247,234,138,.12); transform:translateY(-10px); opacity:0; pointer-events:none; transition:transform .22s cubic-bezier(.3,.7,.4,1), opacity .18s ease; will-change:transform, opacity; }
+  nav.menu{ position:fixed; top:115px; left:0; right:0; z-index:49; flex-direction:column; gap:0; background:rgba(11,2,0,.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(247,234,138,.12); transform:translateY(-10px); opacity:0; pointer-events:none; transition:transform .22s cubic-bezier(.3,.7,.4,1), opacity .18s ease; will-change:transform, opacity; }
   nav.menu.open{transform:translateY(0); opacity:1; pointer-events:auto;}
   nav.menu a{padding:16px 22px; border-top:1px solid rgba(255,255,255,.06); display:block;}
   nav.menu a:active{background:rgba(247,234,138,.06);}
@@ -136,19 +136,19 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
       <a href="contacts.html">Контакты</a>
     </nav>
   </div>
-</header>
-<div class="marquee">
-  <div class="marquee-track">
-    <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
-    <span>Школа Мгера Шакаряна</span>
-    <span>Идёт набор на ближайший поток</span>
-    <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
-    <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
-    <span>Школа Мгера Шакаряна</span>
-    <span>Идёт набор на ближайший поток</span>
-    <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
+      <span>Школа Мгера Шакаряна</span>
+      <span>Идёт набор на ближайший поток</span>
+      <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
+      <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
+      <span>Школа Мгера Шакаряна</span>
+      <span>Идёт набор на ближайший поток</span>
+      <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
+    </div>
   </div>
-</div>
+</header>
 
 <section class="page-hero has-video">
   <video class="video-bg" id="pageHeroVideo" autoplay muted loop playsinline poster="about-poster.jpg">
@@ -203,7 +203,6 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
   <div class="wrap" style="text-align:center;">
     <div class="eyebrow reveal" style="justify-content:center;">География</div>
     <h2 class="section-title reveal">Города, где нас уже знают</h2>
-    <p class="section-lede center reveal">Наведите курсор или проведите пальцем по сфере — она плавно повернётся к вам.</p>
   </div>
   <div class="globe-wrap reveal" id="globeWrap">
     <div class="globe-core"></div>
