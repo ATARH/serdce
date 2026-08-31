@@ -4,22 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0B0200">
-<title>Школа Мгера Шакаряна</title>
+<title>О школе — Школа Мгера Шакаряна</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0B0200;
-  --ember:#3E1003;
-  --maroon:#4E0E02;
+  --ember:#000000; /* Заменил на черный */
+  --maroon:#000000; /* Заменил на черный */
   --amber:#F2D35E;
   --gold:#F7EA8A;
   --cream:#FFF9C8;
 }
 
 *{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; max-width:100%; overflow-x:hidden;}
 body{
   background:var(--ink);
   color:var(--cream);
@@ -27,13 +27,13 @@ body{
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
+  max-width:100%;
+  overflow-x:hidden; /* Запрещаем горизонтальную прокрутку */
 }
-/* быстрый, "лёгкий" тап на мобильных — без серой вспышки и без 300мс задержки */
 a, button, .flip-card, .btn, .premium-card, .status-pill{
   -webkit-tap-highlight-color:transparent;
   touch-action:manipulation;
 }
-/* уважаем настройку "уменьшить анимацию" — и заодно экономим ресурсы слабых телефонов */
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
 }
@@ -69,8 +69,6 @@ header.site-header{
   -webkit-backdrop-filter:blur(18px) saturate(160%);
   border-bottom:1px solid rgba(247,234,138,.1);
 }
-/* На страницах с видео в хиро блюр может не сработать на части мобильных браузеров —
-   держим фон шапки чуть плотнее, чтобы текст меню было видно в любом случае */
 header.site-header.over-video{
   background:rgba(11,2,0,.55);
 }
@@ -130,7 +128,6 @@ nav.menu a.active::after{
 @media(max-width:760px){
   .nav-inner{padding:0 22px;}
   header.site-header{
-    /* блюр дешевле на слабых телефонах при меньшем радиусе — разница на глаз незаметна */
     backdrop-filter:blur(10px) saturate(140%);
     -webkit-backdrop-filter:blur(10px) saturate(140%);
   }
@@ -141,8 +138,6 @@ nav.menu a.active::after{
     backdrop-filter:blur(12px);
     -webkit-backdrop-filter:blur(12px);
     border-bottom:1px solid rgba(247,234,138,.12);
-    /* анимируем только transform/opacity — это композитится на GPU и не подтормаживает,
-       в отличие от анимации max-height, которая пересчитывает раскладку на каждый кадр */
     transform:translateY(-10px);
     opacity:0;
     pointer-events:none;
@@ -153,11 +148,25 @@ nav.menu a.active::after{
   nav.menu a{padding:16px 22px; border-top:1px solid rgba(255,255,255,.06); display:block;}
   nav.menu a:active{background:rgba(247,234,138,.06);}
   .nav-toggle{display:block;}
-  body::after{opacity:.28;} /* текстура-шум легче на мобильном рендере */
+  body::after{opacity:.28;}
 }
 
-/* ===== HERO (общий для внутренних страниц) ===== */
-.page-hero{padding:90px 0 70px; text-align:center;}
+/* ===== HERO ===== */
+.page-hero{padding:90px 0 70px; text-align:center; position:relative;}
+.page-hero.has-video{
+  min-height:56vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  overflow:hidden; padding:70px 24px; isolation:isolate;
+}
+.page-hero .video-bg{
+  position:absolute; inset:0; z-index:-3;
+  width:100%; height:100%; object-fit:cover;
+}
+.page-hero .video-scrim{
+  position:absolute; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 100%, rgba(78,14,2,.55), transparent 65%),
+    linear-gradient(180deg, rgba(11,2,0,.78) 0%, rgba(11,2,0,.5) 45%, rgba(11,2,0,.85) 100%);
+}
 .eyebrow{
   font-family:'Cormorant Garamond',serif; font-style:italic;
   letter-spacing:.16em; text-transform:uppercase;
@@ -173,43 +182,34 @@ nav.menu a.active::after{
   max-width:620px; margin:0 auto; color:rgba(255,249,200,.75); font-size:17px;
 }
 
-/* центрированная секция-заголовок */
 .section-title{font-size:clamp(28px,4vw,40px); font-weight:700; color:var(--gold); margin-bottom:14px;}
+
+/* ===== ВРАЩАЮЩАЯСЯ СФЕРА ГОРОДОВ ===== */
+.globe-wrap{
+  position:relative; width:320px; height:320px; margin:50px auto 10px;
+  cursor:grab; touch-action:pan-y;
+}
+.globe-core{
+  position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, rgba(242,211,94,.22), rgba(78,14,2,.12) 55%, transparent 78%);
+  border:1px solid rgba(247,234,138,.18);
+  box-shadow:inset 0 0 50px rgba(242,211,94,.1), 0 0 70px rgba(242,211,94,.08);
+}
+.globe-core::before{
+  content:"";
+  position:absolute; inset:18px; border-radius:50%;
+  border:1px solid rgba(247,234,138,.1);
+}
+.globe-tags{ position:absolute; inset:0; }
+.globe-tag{
+  position:absolute; left:50%; top:50%;
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  color:var(--gold); font-size:15px; white-space:nowrap;
+  pointer-events:none; text-shadow:0 0 10px rgba(242,211,94,.5);
+  will-change:transform, opacity;
+}
 .section-lede{max-width:640px; color:rgba(255,249,200,.72); font-size:16.5px; margin-bottom:50px;}
 .center{text-align:center; margin-left:auto; margin-right:auto;}
-
-/* ===== HOME HERO ===== */
-.home-hero{
-  min-height:78vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:100px 24px; position:relative; overflow:hidden; isolation:isolate;
-}
-.home-hero .video-bg{
-  position:absolute; inset:0; z-index:-3;
-  width:100%; height:100%; object-fit:cover;
-}
-.home-hero .video-scrim{
-  /* тёмная дымка поверх видео — держит контраст текста и палитру сайта */
-  position:absolute; inset:0; z-index:-2;
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 100%, rgba(78,14,2,.55), transparent 65%),
-    linear-gradient(180deg, rgba(11,2,0,.75) 0%, rgba(11,2,0,.55) 40%, rgba(11,2,0,.85) 100%);
-}
-.home-hero .kicker{
-  font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber);
-  letter-spacing:.22em; text-transform:uppercase; font-size:14px; margin-bottom:26px; opacity:.9;
-}
-.home-hero h1{
-  font-size:clamp(42px,8vw,84px); font-weight:800; line-height:1.03; letter-spacing:-.01em;
-  background:linear-gradient(180deg,#fff8dc 0%, var(--gold) 35%, var(--amber) 65%, var(--ember) 100%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  filter:drop-shadow(0 0 30px rgba(242,211,94,.3));
-  margin-bottom:24px;
-}
-.home-hero .verse{
-  font-family:'PT Serif',serif; font-style:italic; font-size:clamp(15px,1.8vw,19px);
-  color:var(--cream); max-width:600px; opacity:.9; margin-bottom:38px;
-}
-.home-hero .verse cite{display:block; margin-top:10px; font-style:normal; color:var(--amber); font-size:13px; letter-spacing:.05em;}
 
 /* ===== BUTTONS ===== */
 @keyframes btn-ember{
@@ -239,164 +239,16 @@ nav.menu a.active::after{
 .btn.ghost:active{transform:scale(.96); background:rgba(247,234,138,.06);}
 .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
 
-/* ===== STATUS PILL ===== */
-.status-pill{
-  display:inline-flex; align-items:center; gap:9px; padding:9px 16px;
-  background:rgba(242,211,94,.1); border:1px solid rgba(242,211,94,.4);
-  border-radius:999px; font-size:13px; font-weight:700; color:var(--gold);
-  margin-bottom:26px;
-}
-.status-dot{width:7px; height:7px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
-
-/* ===== CARDS (premium hairline) ===== */
+/* ===== CARDS ===== */
 .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
 .premium-card{
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:14px;
+  background:#000000; border:1px solid rgba(255,255,255,.08); border-radius:14px;
   padding:28px 26px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); transition:border-color .25s;
 }
 .premium-card:hover{border-color:rgba(247,234,138,.35);}
 .premium-card .num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:14px; margin-bottom:10px;}
 .premium-card h5{font-family:'Playfair Display',serif; color:var(--gold); font-size:19px; margin-bottom:8px;}
 .premium-card p{font-size:14.5px; color:rgba(255,249,200,.65);}
-
-/* ===== FLIP CARDS (Темы школы) ===== */
-.flip-grid{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:26px;
-}
-.flip-card{
-  position:relative; perspective:1400px; height:300px; cursor:pointer;
-  border-radius:18px; isolation:isolate;
-}
-/* переливающаяся золотая обводка — крутится по кругу вечно, независимо от наведения */
-.flip-card::before{
-  content:"";
-  position:absolute; inset:-2px; border-radius:19px; z-index:-1;
-  background:conic-gradient(from 0deg, transparent 0deg, var(--gold) 70deg, var(--amber) 140deg, transparent 220deg, var(--gold) 320deg, transparent 360deg);
-  animation:border-spin 3.2s linear infinite;
-}
-@keyframes border-spin{ to{ transform:rotate(360deg); } }
-/* левитация: карточка мягко покачивается вверх-вниз при наведении */
-@keyframes card-levitate{
-  0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(-9px); }
-}
-.flip-card:hover{
-  animation:card-levitate 2.4s ease-in-out infinite;
-}
-.flip-inner{
-  position:relative; width:100%; height:100%; text-align:left;
-  transition:transform .6s cubic-bezier(.3,.8,.3,1); transform-style:preserve-3d;
-  will-change:transform;
-}
-.flip-card:active .flip-inner{transform:scale(.98);}
-.flip-card.flipped:active .flip-inner{transform:rotateY(180deg) scale(.98);}
-.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
-.flip-front,.flip-back{
-  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
-  border-radius:16px; padding:26px 24px; display:flex; flex-direction:column;
-  border:1px solid rgba(247,234,138,.16);
-  box-shadow:0 20px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
-}
-.flip-front{
-  background-color:#050100;
-  justify-content:space-between;
-  overflow:hidden;
-}
-.flip-back{ background-color:#050100; }
-.flip-front .card-video{
-  position:absolute; inset:0; z-index:0;
-  width:100%; height:100%; object-fit:cover;
-}
-.flip-front .front-scrim{
-  position:absolute; inset:0; z-index:1;
-  background:linear-gradient(180deg, rgba(5,1,0,.15) 0%, rgba(5,1,0,.5) 55%, rgba(5,1,0,.88) 100%);
-}
-.flip-front .front-content, .flip-front > .hint, .card-tap-btn{
-  position:relative; z-index:2;
-}
-.flip-front .day-num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:15px; letter-spacing:.06em;}
-.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:14px 0 8px; line-height:1.15; text-shadow:0 2px 12px rgba(0,0,0,.6);}
-.flip-front p{font-size:13.5px; color:rgba(255,249,200,.78); text-shadow:0 1px 8px rgba(0,0,0,.7);}
-.flip-front .hint{display:none;}
-.card-tap-btn{
-  align-self:flex-start;
-  margin-top:auto;
-  display:inline-flex; align-items:center; gap:6px;
-  padding:7px 16px; border-radius:999px;
-  background:rgba(5,1,0,.6);
-  border:1px solid rgba(247,234,138,.55);
-  color:var(--gold);
-  font-family:'PT Serif',serif; font-weight:700; font-size:11.5px;
-  letter-spacing:.06em; text-transform:uppercase;
-  animation:btn-ember-ghost 2.6s ease-in-out infinite;
-}
-.flip-back{
-  background:linear-gradient(160deg, var(--ember), var(--maroon));
-  transform:rotateY(180deg);
-}
-.flip-back h4{font-family:'Playfair Display',serif; color:var(--gold); font-size:18px; margin-bottom:14px;}
-.flip-back ul{list-style:none; display:flex; flex-direction:column; gap:10px; font-size:13.5px; color:rgba(255,249,200,.85);}
-.flip-back li{padding-left:18px; position:relative;}
-.flip-back li::before{content:"✦"; position:absolute; left:0; top:1px; color:var(--amber); font-size:11px;}
-.flip-back .hint{margin-top:auto; font-size:12px; color:rgba(247,234,138,.5); font-style:italic; font-family:'Cormorant Garamond',serif;}
-
-@media(max-width:600px){
-  .card-grid{grid-template-columns:1fr;}
-  .flip-grid{grid-template-columns:1fr 1fr;}
-  .flip-card{height:260px;}
-}
-@media(max-width:420px){ .flip-grid{grid-template-columns:1fr;} }
-
-/* ===== TESTIMONIALS ===== */
-.testi-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
-.testi-card{
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:16px;
-  padding:30px 28px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-}
-.testi-card .quote-mark{font-family:'Playfair Display',serif; color:var(--amber); font-size:38px; line-height:1; opacity:.5; margin-bottom:6px;}
-.testi-card p.quote{font-family:'PT Serif',serif; font-style:italic; font-size:15.5px; color:rgba(255,249,200,.88); margin-bottom:18px;}
-.testi-card .who{display:flex; align-items:center; gap:12px;}
-.testi-card .avatar{
-  width:40px; height:40px; border-radius:50%;
-  background:linear-gradient(160deg,var(--gold),var(--amber));
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Playfair Display',serif; font-weight:700; color:#2a1000; font-size:15px;
-}
-.testi-card .name{font-family:'Playfair Display',serif; color:var(--gold); font-size:14.5px;}
-.testi-card .role{font-size:12.5px; color:rgba(255,249,200,.55);}
-@media(max-width:700px){.testi-grid{grid-template-columns:1fr;}}
-
-/* ===== CONTACTS ===== */
-.contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;}
-.contact-list{display:flex; flex-direction:column; gap:22px;}
-.contact-item{
-  display:flex; gap:16px; align-items:flex-start;
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08);
-  border-radius:14px; padding:20px 22px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-}
-.contact-item .ico{
-  width:38px; height:38px; border-radius:50%; flex:none;
-  background:rgba(242,211,94,.12); border:1px solid rgba(242,211,94,.35);
-  display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:16px;
-}
-.contact-item h5{font-family:'Playfair Display',serif; color:var(--gold); font-size:15.5px; margin-bottom:4px;}
-.contact-item p{font-size:14px; color:rgba(255,249,200,.72);}
-.contact-form{
-  background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:16px;
-  padding:32px 30px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-}
-.contact-form h4{font-family:'Playfair Display',serif; color:var(--gold); font-size:19px; margin-bottom:6px;}
-.contact-form .sub{font-size:13.5px; color:rgba(255,249,200,.6); margin-bottom:22px;}
-.field{margin-bottom:16px; display:flex; flex-direction:column; gap:6px;}
-.field label{font-size:12.5px; color:var(--amber); font-family:'Cormorant Garamond',serif; font-style:italic; letter-spacing:.04em;}
-.field input,.field textarea{
-  background:rgba(11,2,0,.5); border:1px solid rgba(255,255,255,.12); border-radius:10px;
-  padding:11px 14px; color:var(--cream); font-family:'PT Serif',serif; font-size:14px;
-  outline:none; resize:vertical;
-}
-.field input:focus,.field textarea:focus{border-color:rgba(247,234,138,.5);}
-@media(max-width:760px){.contact-grid{grid-template-columns:1fr;}}
 
 /* ===== FOOTER ===== */
 footer.site-footer{
@@ -415,6 +267,7 @@ footer.site-footer .meta{
 @media(max-width:760px){
   section{padding:64px 0;}
   .wrap{padding:0 22px;}
+  .card-grid{grid-template-columns:1fr;} /* 1 колонка на телефоне */
 }
 
 </style>
@@ -426,8 +279,8 @@ footer.site-footer .meta{
     <a href="index.html" class="logo">Школа Мгера Шакаряна<small>духовное обучение</small></a>
     <button class="nav-toggle" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
     <nav class="menu">
-      <a href="index.html" class="active">Главная</a>
-      <a href="about.html">О школе</a>
+      <a href="index.html">Главная</a>
+      <a href="about.html" class="active">О школе</a>
       <a href="founder.html">Обо мне</a>
       <a href="program.html">Программа</a>
       <a href="reviews.html">Отзывы</a>
@@ -451,71 +304,74 @@ footer.site-footer .meta{
 </div>
 
 
-<section class="home-hero">
-  <video class="video-bg" id="heroVideo" muted loop playsinline poster="hero-poster.jpg"></video>
+<section class="page-hero has-video">
+  <video class="video-bg" id="pageHeroVideo" muted loop playsinline poster="about-poster.jpg"></video>
   <script>
   (function(){
     if (window.matchMedia('(min-width:761px)').matches) {
-      var v = document.getElementById('heroVideo');
+      var v = document.getElementById('pageHeroVideo');
       var s = document.createElement('source');
-      s.src = 'hero.mp4'; s.type = 'video/mp4';
+      s.src = 'about.mp4'; s.type = 'video/mp4';
       v.appendChild(s); v.load();
       var p = v.play(); if (p && p.catch) p.catch(function(){});
     }
   })();
   </script>
   <div class="video-scrim"></div>
-  <h1>Школа Мгера<br>Шакаряна</h1>
-  <p class="verse">
-    «И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим»
-    <cite>Иеремии 29:13</cite>
-  </p>
-  <div class="btn-row">
-    <a href="program.html" class="btn">Смотреть программу</a>
-    <a href="about.html" class="btn ghost">О школе</a>
+  <div class="wrap">
+    <div class="eyebrow">О школе</div>
+    <h1>Школа Мгера Шакаряна</h1>
+    <p class="lede">
+      — это очное пятидневное обучение для тех, кто
+      хочет не просто узнать о вере, а прожить путь ученика: от основания
+      до практического служения.
+    </p>
   </div>
 </section>
 
 <section class="tight">
   <div class="wrap">
-    <div class="eyebrow">Коротко о школе</div>
-    <h2 class="section-title">Путь длиной в пять дней</h2>
+    <div class="eyebrow">Миссия</div>
+    <h2 class="section-title">Зачем существует школа</h2>
     <p class="section-lede">
-      Школа Мгера Шакаряна — это пять дней очного погружения: от основания веры
-      до практического служения. Каждый день — отдельная ступень, но вместе
-      они складываются в цельный путь ученика.
+      Мы верим, что вера взрослеет не от объёма прочитанного, а от того,
+      что прожито и применено. Поэтому программа школы построена как путь
+      из пяти шагов — от личного основания до посланничества в мир —
+      а не как набор разрозненных лекций.
     </p>
     <div class="card-grid">
       <div class="premium-card">
-        <div class="num">01</div>
-        <h5>Живое общение</h5>
-        <p>Небольшие группы, открытый диалог и время для вопросов после каждой темы.</p>
+        <div class="num">Путь</div>
+        <h5>Служение</h5>
+        <p>Годы практического служения в общине, которые легли в основу программы школы.</p>
       </div>
       <div class="premium-card">
-        <div class="num">02</div>
-        <h5>Глубина Писания</h5>
-        <p>Каждый день строится вокруг конкретного отрывка и его практического приложения.</p>
+        <div class="num">Опыт</div>
+        <h5>Наставничество</h5>
+        <p>Опыт личного сопровождения учеников — от первых вопросов до самостоятельного служения.</p>
       </div>
       <div class="premium-card">
-        <div class="num">03</div>
-        <h5>Практика, не только теория</h5>
-        <p>Молитвенные практикумы и разбор реальных ситуаций служения.</p>
+        <div class="num">Цель</div>
+        <h5>Передача</h5>
+        <p>Желание передать не только знание, но и практику живой веры следующему поколению.</p>
       </div>
+    </div>
+    <div class="btn-row" style="justify-content:flex-start; margin-top:30px;">
+      <a href="program.html" class="btn">Программа школы</a>
+      <a href="contacts.html" class="btn ghost">Задать вопрос</a>
     </div>
   </div>
 </section>
 
 <section class="tight">
-  <div class="wrap">
-    <div class="eyebrow">Программа</div>
-    <h2 class="section-title">Пять дней школы</h2>
-    <p class="section-lede">Нажмите на карточку, чтобы увидеть, из чего состоит день.</p>
+  <div class="wrap" style="text-align:center;">
+    <div class="eyebrow" style="justify-content:center;">География</div>
+    <h2 class="section-title">Города, где нас уже знают</h2>
+    <p class="section-lede center">Наведите курсор или проведите пальцем по сфере — она плавно повернётся к вам.</p>
   </div>
-  <div class="wrap">
-    <div class="flip-grid" id="home-preview"></div>
-  </div>
-  <div class="wrap" style="margin-top:40px; text-align:center;">
-    <a href="program.html" class="btn ghost">Вся программа →</a>
+  <div class="globe-wrap" id="globeWrap">
+    <div class="globe-core"></div>
+    <div class="globe-tags" id="globeTags"></div>
   </div>
 </section>
 
@@ -525,110 +381,79 @@ footer.site-footer .meta{
 </footer>
 
 <script>
-// Отредактируйте темы и пункты под реальную программу школы —
-// эти данные используются и на Главной, и на странице «Программа».
-window.SCHOOL_DAYS = [
-  {
-    num: "I",
-    title: "Встреча",
-    short: "Первый шаг — вернуться к сердцу Бога и узнать Его адрес.",
-    vid: "day1.mp4",
-    poster: "day1-poster.jpg",
-    points: [
-      "Вернись к Моему сердцу",
-      "Адрес Бога",
-      "Знакомство и встреча с Богом"
-    ]
-  },
-  {
-    num: "II",
-    title: "Голос Бога",
-    short: "Три служения о том, как слышать и узнавать голос Бога.",
-    vid: "day2.mp4",
-    poster: "day2-poster.jpg",
-    points: [
-      "Как слышать голос Бога",
-      "Как отличать Его голос от других голосов",
-      "Как подружиться с Богом"
-    ]
-  },
-  {
-    num: "III",
-    title: "Присутствие",
-    short: "Как войти в Божье Присутствие и удержать его.",
-    vid: "day3.mp4",
-    poster: "day3-poster.jpg",
-    points: [
-      "Как следовать за Богом",
-      "Как входить в Божье Присутствие",
-      "Как удерживать Божье Присутствие"
-    ]
-  },
-  {
-    num: "IV",
-    title: "Святой Дух",
-    short: "Знакомство с Личностью, характером и сердцем Святого Духа.",
-    vid: "day4.mp4",
-    poster: "day4-poster.jpg",
-    points: [
-      "Святой Дух — Кто Он",
-      "Характер и сердце Святого Духа",
-      "Как углубить отношения со Святым Духом"
-    ]
-  },
-  {
-    num: "V",
-    title: "Святое Святых",
-    short: "Свидание с Богом за пределами внешнего двора.",
-    vid: "day5.mp4",
-    poster: "day5-poster.jpg",
-    points: [
-      "Свидание с Богом",
-      "Покидая внешний двор",
-      "Святое Святых"
-    ]
-  }
-];
-
-</script>
-<script>
-  document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
   document.querySelectorAll('.meta').forEach(el=>{ el.textContent = el.textContent.replace('{{YEAR}}', new Date().getFullYear()); });
+</script>
 
-  const preview = document.getElementById('home-preview');
-  if(preview && window.SCHOOL_DAYS){
-    window.SCHOOL_DAYS.forEach(day=>{
-      const card = document.createElement('div');
-      card.className = 'flip-card';
-      card.innerHTML = `
-        <div class="flip-inner">
-          <div class="flip-front">
-            <video class="card-video" muted loop playsinline poster="${day.poster}"></video>
-            <div class="front-scrim"></div>
-            <div class="front-content">
-              <div class="day-num">День ${day.num}</div>
-              <h3>${day.title}</h3>
-              <p>${day.short}</p>
-            </div>
-            <div class="card-tap-btn">нажми</div>
-          </div>
-          <div class="flip-back">
-            <h4>${day.title}</h4>
-            <ul>${day.points.map(p=>`<li>${p}</li>`).join('')}</ul>
-            <div class="hint">← назад</div>
-          </div>
-        </div>`;
-      card.addEventListener('click', ()=>card.classList.toggle('flipped'));
-      preview.appendChild(card);
-      if (window.matchMedia('(min-width:761px)').matches) {
-        const vid = card.querySelector('.card-video');
-        const source = document.createElement('source');
-        source.src = day.vid; source.type = 'video/mp4';
-        vid.appendChild(source); vid.load();
-        const p = vid.play(); if (p && p.catch) p.catch(function(){});
-      }
-    });
+<script>
+(function(){
+  var wrap = document.getElementById('globeWrap');
+  var tagsContainer = document.getElementById('globeTags');
+  if(!wrap || !tagsContainer) return;
+
+  var cities = ['Сочи', 'Краснодар', 'Москва', 'Екатеринбург', 'Омск'];
+  var R = 130;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var N = cities.length;
+
+  var points = cities.map(function(name, i){
+    var y = N > 1 ? 1 - (i/(N-1))*2 : 0;
+    var radius = Math.sqrt(Math.max(0, 1 - y*y));
+    var golden = Math.PI * (3 - Math.sqrt(5));
+    var theta = golden * i;
+    var x = Math.cos(theta) * radius;
+    var z = Math.sin(theta) * radius;
+    var el = document.createElement('span');
+    el.className = 'globe-tag';
+    el.textContent = name;
+    tagsContainer.appendChild(el);
+    return { x:x, y:y, z:z, el:el };
+  });
+
+  var angleY = 0.4, angleX = 0.15;
+  var targetTiltX = 0, targetTiltY = 0;
+  var curTiltX = 0, curTiltY = 0;
+
+  function onMove(clientX, clientY){
+    var rect = wrap.getBoundingClientRect();
+    var nx = (clientX - rect.left - rect.width/2) / (rect.width/2);
+    var ny = (clientY - rect.top - rect.height/2) / (rect.height/2);
+    targetTiltY = nx * 0.9;
+    targetTiltX = -ny * 0.6;
   }
+  wrap.addEventListener('mousemove', function(e){ onMove(e.clientX, e.clientY); });
+  wrap.addEventListener('mouseleave', function(){ targetTiltX = 0; targetTiltY = 0; });
+  wrap.addEventListener('touchmove', function(e){
+    if (e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY);
+  }, {passive:true});
+  wrap.addEventListener('touchend', function(){ targetTiltX = 0; targetTiltY = 0; });
+
+  function render(){
+    curTiltX += (targetTiltX - curTiltX) * 0.06;
+    curTiltY += (targetTiltY - curTiltY) * 0.06;
+    if (!reduced) angleY += 0.0026;
+    var ay = angleY + curTiltY, ax = angleX + curTiltX;
+    var cosY = Math.cos(ay), sinY = Math.sin(ay);
+    var cosX = Math.cos(ax), sinX = Math.sin(ax);
+
+    points.forEach(function(p){
+      var x1 = p.x*cosY - p.z*sinY;
+      var z1 = p.x*sinY + p.z*cosY;
+      var y2 = p.y*cosX - z1*sinX;
+      var z2 = p.y*sinX + z1*cosX;
+      var x2 = x1;
+
+      var scale = Math.max(0.45, Math.min(1, 0.45 + ((z2+1.4)/2.4)*0.55));
+      var opacity = Math.max(.35, Math.min(1, (z2+1.3)/2));
+      var sx = x2 * R, sy = y2 * R;
+      p.el.style.transform = 'translate(-50%,-50%) translate3d(' + sx.toFixed(1) + 'px,' + sy.toFixed(1) + 'px,0) scale(' + scale.toFixed(3) + ')';
+      p.el.style.opacity = opacity.toFixed(2);
+      p.el.style.zIndex = Math.round((z2+1.5)*100);
+    });
+
+    requestAnimationFrame(render);
+  }
+  render();
+})();
 </script>
 
 <canvas id="spark-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:9999;"></canvas>
