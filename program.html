@@ -129,14 +129,6 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 .btn.ghost:active{transform:scale(.96); background:rgba(247,234,138,.06);}
 .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
 
-/* ===== CARDS ===== */
-.card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-.premium-card{ background:var(--maroon); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:28px 26px; box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
-.premium-card:hover{border-color:rgba(247,234,138,.35);}
-.premium-card .num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:14px; margin-bottom:10px;}
-.premium-card h5{font-family:'Playfair Display',serif; color:var(--gold); font-size:19px; margin-bottom:8px;}
-.premium-card p{font-size:14.5px; color:rgba(255,249,200,.65);}
-
 /* ===== FLIP CARDS (Без анимаций, статичные) ===== */
 .flip-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:26px; }
 .flip-card{ position:relative; perspective:1400px; height:300px; cursor:pointer; border-radius:18px; isolation:isolate; }
@@ -150,8 +142,7 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 .flip-front .card-video{ position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; }
 .flip-front .front-scrim{ position:absolute; inset:0; z-index:1; background: linear-gradient(180deg, rgba(26,4,0,.15) 0%, rgba(26,4,0,.6) 55%, rgba(26,4,0,.9) 100%); }
 .flip-front .front-content, .flip-front > .hint, .card-tap-btn{ position:relative; z-index:2; }
-.flip-front .day-num{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber); font-size:15px; letter-spacing:.06em;}
-.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:14px 0 8px; line-height:1.15; text-shadow:0 2px 12px rgba(0,0,0,.6);}
+.flip-front h3{font-family:'Playfair Display',serif; color:var(--gold); font-size:26px; margin:0 0 8px; line-height:1.15; text-shadow:0 2px 12px rgba(0,0,0,.6);}
 .flip-front p{font-size:13.5px; color:rgba(255,249,200,.78); text-shadow:0 1px 8px rgba(0,0,0,.7);}
 .flip-front .hint{display:none;}
 .card-tap-btn{ align-self:flex-start; margin-top:auto; display:inline-flex; align-items:center; gap:6px; padding:7px 16px; border-radius:999px; background:rgba(11,2,0,.6); border:1px solid rgba(247,234,138,.55); color:var(--gold); font-family:'PT Serif',serif; font-weight:700; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; }
@@ -163,7 +154,6 @@ nav.menu a.active::after{ content:""; position:absolute; left:0; right:0; bottom
 .flip-back .hint{margin-top:auto; font-size:12px; color:rgba(247,234,138,.5); font-style:italic; font-family:'Cormorant Garamond',serif;}
 
 @media(max-width:600px){
-  .card-grid{grid-template-columns:1fr;}
   .flip-grid{grid-template-columns:1fr;} 
   .flip-card{height:260px;}
 }
@@ -197,12 +187,10 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
   <div class="marquee-track">
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
     <span>«И взыщете Меня, и найдёте, если взыщете Меня всем сердцем вашим» — Иеремии 29:13</span>
     <span>Школа Мгера Шакаряна</span>
-    <span>Пять дней, меняющих сердце</span>
     <span>Идёт набор на ближайший поток</span>
     <span>Встреча · Голос Бога · Присутствие · Святой Дух · Святое Святых</span>
   </div>
@@ -211,9 +199,8 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
 <section class="page-hero">
   <div class="wrap">
     <div class="eyebrow">Программа</div>
-    <h1>Пять дней школы</h1>
     <p class="lede">
-      Нажмите на карточку, чтобы увидеть, из чего состоит каждый день.
+      Нажмите на карточку, чтобы увидеть подробности.
     </p>
   </div>
 </section>
@@ -235,11 +222,11 @@ footer.site-footer .meta{ font-family:'Cormorant Garamond',serif; font-style:ita
 
 <script>
 window.SCHOOL_DAYS = [
-  { num: "I", title: "Встреча", short: "Первый шаг — вернуться к сердцу Бога и узнать Его адрес.", vid: "day1.mp4", poster: "day1-poster.jpg", points: [ "Вернись к Моему сердцу", "Адрес Бога", "Знакомство и встреча с Богом" ] },
-  { num: "II", title: "Голос Бога", short: "Три служения о том, как слышать и узнавать голос Бога.", vid: "day2.mp4", poster: "day2-poster.jpg", points: [ "Как слышать голос Бога", "Как отличать Его голос от других голосов", "Как подружиться с Богом" ] },
-  { num: "III", title: "Присутствие", short: "Как войти в Божье Присутствие и удержать его.", vid: "day3.mp4", poster: "day3-poster.jpg", points: [ "Как следовать за Богом", "Как входить в Божье Присутствие", "Как удерживать Божье Присутствие" ] },
-  { num: "IV", title: "Святой Дух", short: "Знакомство с Личностью, характером и сердцем Святого Духа.", vid: "day4.mp4", poster: "day4-poster.jpg", points: [ "Святой Дух — Кто Он", "Характер и сердце Святого Духа", "Как углубить отношения со Святым Духом" ] },
-  { num: "V", title: "Святое Святых", short: "Свидание с Богом за пределами внешнего двора.", vid: "day5.mp4", poster: "day5-poster.jpg", points: [ "Свидание с Богом", "Покидая внешний двор", "Святое Святых" ] }
+  { title: "Встреча", short: "Первый шаг — вернуться к сердцу Бога и узнать Его адрес.", vid: "day1.mp4", poster: "day1-poster.jpg", points: [ "Вернись к Моему сердцу", "Адрес Бога", "Знакомство и встреча с Богом" ] },
+  { title: "Голос Бога", short: "Три служения о том, как слышать и узнавать голос Бога.", vid: "day2.mp4", poster: "day2-poster.jpg", points: [ "Как слышать голос Бога", "Как отличать Его голос от других голосов", "Как подружиться с Богом" ] },
+  { title: "Присутствие", short: "Как войти в Божье Присутствие и удержать его.", vid: "day3.mp4", poster: "day3-poster.jpg", points: [ "Как следовать за Богом", "Как входить в Божье Присутствие", "Как удерживать Божье Присутствие" ] },
+  { title: "Святой Дух", short: "Знакомство с Личностью, характером и сердцем Святого Духа.", vid: "day4.mp4", poster: "day4-poster.jpg", points: [ "Святой Дух — Кто Он", "Характер и сердце Святого Духа", "Как углубить отношения со Святым Духом" ] },
+  { title: "Святое Святых", short: "Свидание с Богом за пределами внешнего двора.", vid: "day5.mp4", poster: "day5-poster.jpg", points: [ "Свидание с Богом", "Покидая внешний двор", "Святое Святых" ] }
 ];
 </script>
 <script>
@@ -257,7 +244,6 @@ window.SCHOOL_DAYS = [
             <video class="card-video" muted loop playsinline poster="${day.poster}"></video>
             <div class="front-scrim"></div>
             <div class="front-content">
-              <div class="day-num">День ${day.num}</div>
               <h3>${day.title}</h3>
               <p>${day.short}</p>
             </div>
@@ -272,7 +258,6 @@ window.SCHOOL_DAYS = [
       card.addEventListener('click', ()=>card.classList.toggle('flipped'));
       grid.appendChild(card);
       
-      // Видеофоны грузятся и играют на всех устройствах (ПК и телефоны)
       const vid = card.querySelector('.card-video');
       const source = document.createElement('source');
       source.src = day.vid; source.type = 'video/mp4';
@@ -281,7 +266,6 @@ window.SCHOOL_DAYS = [
     });
   }
   
-  // Скрипт для всплытия элементов
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
